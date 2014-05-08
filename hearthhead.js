@@ -5,8 +5,6 @@ $('.deckguide-cards-type li').each(function(i, el) {
 		switch(true) {
 		case ((costAdj.indexOf('0') != -1)||(costAdj.indexOf('2') != -1)):
 			values[0] = values[0].substring(1);
-			console.log(values[0]);
-			console.log(values);
 			break;
 		}
 		if ($.inArray("x2", values) != "-1") {
