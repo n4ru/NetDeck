@@ -2,29 +2,36 @@
 "update_url": "https://clients2.google.com/service/update2/crx",
 
   "manifest_version": 2,
-
   "name": "net.DEK",
   "description": "Download hearthstone decklists from popular sites automatically.",
-  "version": "1.0.2",
+  "version": "1.1",
 	"icons": { "16": "key.png",
            "48": "key.png",
           "128": "key.png" },
   "web_accessible_resources": [
     "key.png",
+    "key_2.png",
     "donation.png",
 	"btc.png"
   ],
   "content_scripts": [
   {
 	"matches": ["*://*.hearthstonetopdeck.com/deck.php*"],
+      "all_frames": true,
 	"js": ["jq.js","hearthstonetopdeck.js"]
 	},
   {
 	"matches": ["*://*.hearthhead.com/deck*"],
+      "all_frames": true,
 	"js": ["jq.js","hearthhead.js"]
   },
   {
+	"matches": ["<all_urls>"],
+	"js": ["jq.js","ndslink.js"]
+  },
+  {
 	"matches": ["*://*.hearthpwn.com/decks/*-*"],
+      "all_frames": true,
 	"js": ["jq.js","hearthpwn.js"]
   }
 	]
