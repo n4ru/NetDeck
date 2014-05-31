@@ -26,13 +26,18 @@
 	"js": ["jq.js","hearthhead.js"]
   },
   {
-	"matches": ["<all_urls>"],
-	"js": ["jq.js","ndslink.js"]
-  },
-  {
 	"matches": ["*://*.hearthpwn.com/decks/*-*"],
       "all_frames": true,
 	"js": ["jq.js","hearthpwn.js"]
+  },
+  {
+	"matches": ["*://*.gosugamers.net/hearthstone/decks/*-*"],
+      "all_frames": true,
+	"js": ["jq.js","gosugamers.js"]
+  },
+  {
+	"matches": ["<all_urls>"],
+	"js": ["jq.js","ndslink.js"]
   }
 	]
 	
