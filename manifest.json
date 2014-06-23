@@ -4,7 +4,7 @@
   "manifest_version": 2,
   "name": "net.DEK",
   "description": "Download hearthstone decklists from popular sites automatically.",
-  "version": "1.1",
+  "version": "1.1.2",
 	"icons": { "16": "key.png",
            "48": "key.png",
           "128": "key.png" },
@@ -34,6 +34,11 @@
 	"matches": ["*://*.gosugamers.net/hearthstone/decks/*-*"],
       "all_frames": true,
 	"js": ["jq.js","gosugamers.js"]
+  },
+  {
+	"matches": ["*://*.hearthstoneplayers.com/*-*"],
+      "all_frames": true,
+	"js": ["jq.js","hearthstoneplayers.js"]
   },
   {
 	"matches": ["<all_urls>"],
