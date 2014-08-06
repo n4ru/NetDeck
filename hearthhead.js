@@ -1,17 +1,10 @@
 var decklist = [];
-$('.deckguide-cards-type li').each(function(i, el) {
-	var values = $(this).text().substring(1).split(' ');
-		var costAdj = values[0];
-		switch(true) {
-		case ((costAdj.indexOf('0') != -1)||(costAdj.indexOf('2') != -1)):
-			values[0] = values[0].substring(1);
-			break;
-		}
-		if ($.inArray("x2", values) != "-1") {
-		values.pop();
-		decklist.push(values.join(' '));
+$('[class^="collapsed-card"] > .base').each(function(i, el) {
+	var values = $('.name', this).text();
+	if ($('.count', this).text() == "2") {
+		decklist.push(values);
 	}
-    decklist.push(values.join(' '));
+	decklist.push(values);
 });
 
 var data = decklist.join("\r\n");
@@ -45,6 +38,6 @@ if (window.location.href.indexOf("#ndslink") > -1) {
    }); 
 });
 
-if ($('.deckguide-cards-type li').length && !($('.deckguide-card-edit').length)) {
-$('body').prepend('<div style="position:fixed; top:100px; left:0"><a href="#download"class="download"><img width="100px" height="100px" src="' + chrome.extension.getURL("key.png") + '"></br></a><a href="#copylink" class="copylink"><img width="100px" height="100px" src="' + chrome.extension.getURL("key_2.png") + '"></br></br></a><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8HU8C8R5VNE96"><img width="100px" height="100px" src="' + chrome.extension.getURL("donation.png") + '"></a></br><img width="100px" height="100px" src="' + chrome.extension.getURL("btc.png") + '"></div>');
+if ($('.deckguide-cards').length && !($('.deckguide-card-edit').length)) {
+$('body').prepend('<div style="position:fixed; top:100px; left:0"><a href="#download"class="download"><img width="100px" height="100px" src="' + chrome.extension.getURL("key.png") + '"></br></a><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8HU8C8R5VNE96"><img width="100px" height="100px" src="' + chrome.extension.getURL("donation.png") + '"></a></br><img width="100px" height="100px" src="' + chrome.extension.getURL("btc.png") + '"></div>');
 }

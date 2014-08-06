@@ -1,8 +1,8 @@
 ﻿var decklist = [];
-$('.card').each(function(i, el) {
+$('[class^="card cardWrapper"]').each(function(i, el) {
 	//$('.card-link card ').each (function(i, el) {
-	var values = $('.card-title', this).text(); //substring(2).substring(0, $(this).text().length - 10).replace(/[^a-zA-Z0-9\.\s']+/g ,"").split(' ');
-	if ($('.card-count', this).text() == "2") {
+	var values = $('.name', this).text(); //substring(2).substring(0, $(this).text().length - 10).replace(/[^a-zA-Z0-9\.\s']+/g ,"").split(' ');
+	if ($('.qty', this).text() == "2") {
     decklist.push(values);
 	}
     decklist.push(values);
@@ -26,7 +26,7 @@ var saveData = (function () {
 
 
 $(document).ready(function(){
-fileName = $('#deck-list-title').text() + '.txt';
+fileName = $('.page-title').text().replace(/ Deck Views:.*/, "") + '.txt';
 if (window.location.href.indexOf("#ndslink") > -1) {
     saveData(data, fileName);
 }
@@ -39,7 +39,6 @@ if (window.location.href.indexOf("#ndslink") > -1) {
 
    
 });
-
-if ($('#deck-list-title	').length) {
-$('body').append('<div style="position:fixed; top:100px; left:0"><a href="http://' + window.location.hostname + window.location.pathname + '#download"class="download"><img width="100px" height="100px" src="' + chrome.extension.getURL("key.png") + '"></br></a><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8HU8C8R5VNE96"><img width="100px" height="100px" src="' + chrome.extension.getURL("donation.png") + '"></a></br><img width="100px" height="100px" src="' + chrome.extension.getURL("btc.png") + '"></div>');
+if ($('.deckBuilderCardsWrapper').length) {
+$('.header-inner').prepend('<div style="position:fixed; bottom:100px; left:0"><a href="http://' + window.location.hostname + window.location.pathname + '#download"class="download"><img width="100px" height="100px" src="' + chrome.extension.getURL("key.png") + '"></br></a><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8HU8C8R5VNE96"><img width="100px" height="100px" src="' + chrome.extension.getURL("donation.png") + '"></a></br><img width="100px" height="100px" src="' + chrome.extension.getURL("btc.png") + '"></div>');
 }
