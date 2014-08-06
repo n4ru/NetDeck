@@ -41,6 +41,11 @@
 	"js": ["jq.js","hearthstoneplayers.js"]
   },
   {
+	"matches": ["*://*.hearthstats.net/decks/*"],
+      "all_frames": true,
+	"js": ["jq.js","hearthstats.js"]
+  },
+  {
 	"matches": ["<all_urls>"],
 	"js": ["jq.js","ndslink.js"]
   }
