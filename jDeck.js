@@ -23,8 +23,9 @@ var Deck = Class.create({
 			var values = $(elemtwo, this).text();
 			if ($(elemthree, this).text().indexOf('2') >= 0){
 				self.list.push(values);
-			}
-			self.list.push(values);
+				self.list.push(values);
+			} else
+				self.list.push(values);
 		});
     },
 	addCardsException: function (cardname) {
@@ -46,46 +47,81 @@ var Deck = Class.create({
 	}
 });
 
-if ((window.location.href).indexOf('hearthhead.com/deck=') >= 0){
+if (((window.location.href).indexOf('hearthhead.com/deck=') >= 0)&&($('[class^="collapsed-card"] > .base').length)){
+	chrome.extension.sendMessage({greeting: "deck"});
 	var deck = new Deck();
 	deck.addCards('[class^="collapsed-card"] > .base', '.name', '.count');
 	var download = function(){
 		deck.download($('.text h1').text() + '.txt');
 	};
+} else if ((window.location.href).indexOf('hearthhead.com/deckbuilder') >= 0){
+	chrome.extension.sendMessage({greeting: "deck"});
+	var deck = new Deck();
+	$('[class^="column displaytype-deck real"]').each(function(i, el) {
+		var values = $('a > img', this).attr("alt");
+		if ($('.card-count', this).text().indexOf('2') >= 0){
+			deck.addCardsException(values);
+			deck.addCardsException(values);
+		} else
+			deck.addCardsException(values);
+	});
+	var download = function(){
+		deck.download('Deck.txt');
+	};
 } else if ((window.location.href).indexOf('hearthstonetopdeck.com/deck.php?') >= 0){
+	chrome.extension.sendMessage({greeting: "deck"});
 	var deck = new Deck();
 	$('.cardname').each(function(i, el) {
-	var values = $(this).text().split(' ');
-	var count = parseInt(values.shift(), 10);
-	for (var i = 0; i < count; i++) {
-		deck.addCardsException(values.join(' '));
-	}
+		var values = $(this).text().split(' ');
+		var count = parseInt(values.shift(), 10);
+		for (var i = 0; i < count; i++) {
+			deck.addCardsException(values.join(' '));
+		}
 	});
-		var download = function(){
+	var download = function(){
 		deck.download($('#deckname').text() + '.txt');
 	};
-} else if ((window.location.href).indexOf('gosugamers.net/decks/') >= 0){
+} else if ((window.location.href).indexOf('gosugamers.net/hearthstone/decks/') >= 0){
+	chrome.extension.sendMessage({greeting: "deck"});
 	var deck = new Deck();
 	deck.addCards('[class^="card-link"]', '[class^="name card-quality"]', '.count');
 	var download = function(){
 		deck.download($('h2 [class^="class-color"]').text() + '.txt');
 	};
-} else if ((window.location.href).indexOf('hearthstoneplayers.com/') >= 0){
+} else if (((window.location.href).indexOf('hearthstoneplayers.com/') >= 0)&&($('[class^="deck-list"]').length)){
+	chrome.extension.sendMessage({greeting: "deck"});
 	var deck = new Deck();
 	deck.addCards('.card', '.card-title', '.card-count');
 	var download = function(){
 		deck.download($('#post-title').text() + '.txt');
 	};
 } else if ((window.location.href).indexOf('hearthpwn.com/decks/') >= 0){
+	chrome.extension.sendMessage({greeting: "deck"});
 	var deck = new Deck();
 	deck.addCards('.even, .odd', 'b', '.col-name');
 	var download = function(){
-		deck.download($('.t-deck-title').text().replace(/ Deck Views:.*/, "") + '.txt');
+		deck.download($('.t-deck-title').text() + '.txt');
 	};
-} else if ((window.location.href).indexOf('hearthstats.net/decks/') >= 0){
+} else if ((((window.location.href).indexOf('hearthstats.net/decks/') >= 0)||((window.location.href).indexOf('hss.io/decks/') >= 0))&&($('.deckBuilderCardsWrapper').length)){
+	chrome.extension.sendMessage({greeting: "deck"});
 	var deck = new Deck();
 	deck.addCards('[class^="card cardWrapper"]', '.name', '.qty');
 	var download = function(){
 		deck.download($('.page-title').text().replace(/ Deck Views:.*/, "") + '.txt');
+	};
+} else if ((window.location.href).indexOf('hearthpwn.com/deckbuilder') >= 0){
+	chrome.extension.sendMessage({greeting: "deck"});
+	var deck = new Deck();
+	$('.even, .odd').each(function(i, el) {
+		var values = $('b', this).text();
+		if ($('.inline-card-count', this).text().indexOf('2') >= 0){
+			deck.addCardsException(values);
+			deck.addCardsException(values);
+		} else if ($('.inline-card-count', this).text().indexOf('1') >= 0){
+			deck.addCardsException(values);
+		};
+	});
+	var download = function(){
+		deck.download($('.deck-name-container > h2').text() + '.txt');
 	};
 }

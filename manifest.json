@@ -3,7 +3,7 @@
   "manifest_version": 2,
   "name": "net.DEK",
   "description": "Download hearthstone decklists from popular sites automatically.",
-  "version": "2.0",
+  "version": "2.0.1",
 	"icons": { "16": "key.png",
            "48": "key.png",
           "128": "key.png" },
@@ -13,36 +13,15 @@
   },
   "background": {
     "scripts": ["background.js"],
-        "run_at": "document_end",
+	"run_at": "document_start",
     "persistent": false
   },
   "permissions": [
-    "activeTab",
-	"tabs"
+    "activeTab"
   ],
   "content_scripts": [
   {
-	"matches": ["*://*.hearthstonetopdeck.com/deck.php*"],
-	"js": ["jq.js","class.js","jdeck.js"]
-	},
-  {
-	"matches": ["*://*.hearthhead.com/deck*"],
-	"js": ["jq.js","class.js","jdeck.js"]
-  },
-  {
-	"matches": ["*://*.hearthpwn.com/decks/*-*"],
-	"js": ["jq.js","class.js","jdeck.js"]
-  },
-  {
-	"matches": ["*://*.gosugamers.net/hearthstone/decks/*-*"],
-	"js": ["jq.js","class.js","jdeck.js"]
-  },
-  {
-	"matches": ["*://*.hearthstoneplayers.com/*-*"],
-	"js": ["jq.js","class.js","jdeck.js"]
-  },
-  {
-	"matches": ["*://*.hearthstats.net/decks/*"],
+	"matches": ["*://*.hearthstonetopdeck.com/deck.php*","*://*.hss.io/decks/*","*://*.hearthhead.com/deck*","*://*.hearthpwn.com/deck*","*://*.gosugamers.net/hearthstone/decks/*-*","*://*.hearthstoneplayers.com/*-*","*://*.hearthstats.net/decks/*"],
 	"js": ["jq.js","class.js","jdeck.js"]
   }
 	]
