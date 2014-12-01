@@ -72,14 +72,14 @@ if (((window.location.href).indexOf('hearthhead.com/deck=') >= 0)&&($('[class^="
 	chrome.extension.sendMessage({greeting: "deck"});
 	var deck = new Deck();
 	$('.cardname').each(function(i, el) {
-		var values = $(this).text().split(' ');
+		var values = $.trim($(this).text().replace(/[\t\n]+/g,'')).split(' ');
 		var count = parseInt(values.shift(), 10);
 		for (var i = 0; i < count; i++) {
 			deck.addCardsException(values.join(' '));
 		}
 	});
 	var download = function(){
-		deck.download($('#deckname').text() + '.txt');
+		deck.download($('#wrapper > #center > .headbar > div[style*="float:left"]').text() + '.txt');
 	};
 } else if ((window.location.href).indexOf('gosugamers.net/hearthstone/decks/') >= 0){
 	chrome.extension.sendMessage({greeting: "deck"});
