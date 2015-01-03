@@ -3,7 +3,7 @@
   "manifest_version": 2,
   "name": "net.DEK",
   "description": "Download hearthstone decklists from popular sites automatically.",
-  "version": "2.1",
+  "version": "2.2",
 	"icons": { "16": "key.png",
            "48": "key.png",
           "128": "key.png" },
@@ -21,7 +21,7 @@
   ],
   "content_scripts": [
   {
-	"matches": ["*://*.hearthstonetopdeck.com/deck.php*","*://*.hss.io/decks/*","*://*.hearthhead.com/deck*","*://*.hearthpwn.com/deck*","*://*.gosugamers.net/hearthstone/decks/*-*","*://*.hearthstoneplayers.com/*-*","*://*.hearthstats.net/decks/*"],
+	"matches": ["*://*.hearthstonetopdeck.com/deck.php*","*://*.hss.io/decks/*","*://*.hearthhead.com/deck*","*://*.hearthpwn.com/deck*","*://*.gosugamers.net/hearthstone/decks/*-*","*://*.hearthstoneplayers.com/*-*","*://*.hearthstats.net/decks/*","*://*.heartharena.com/arena-run/*","*://*.tempostorm.com/decks/*"],
 	"js": ["jq.js","class.js","jdeck.js"]
   }
 	]

@@ -1,15 +1,6 @@
 /*
 
--- jDeck v.0.1 --
-jQuery plugin for properly parsing Hearthstone decklists.
-
-Functions
-exDeck.addCards('.card-main', '.card-names', '.card-count')
--- Add cards to the deck objects from the .card-names elements within the .card-main element, using .card-count for the number of cards.
-exDeck.download("decklist")
--- Download a file with the list of cards.
-exDeck.addCardsExcception
--- Manual push cards to the list for sites that have weird formatting.
+jDeck is a JavaScript object for properly parsing Hearthstone decklists into a text file using jQuery selectors.
 
 */
 
@@ -24,8 +15,9 @@ var Deck = Class.create({
 			if ($(elemthree, this).text().indexOf('2') >= 0){
 				self.list.push(values);
 				self.list.push(values);
-			} else
+			} else {
 				self.list.push(values);
+			}
 		});
     },
 	addCardsException: function (cardname) {
@@ -39,7 +31,7 @@ var Deck = Class.create({
 		document.body.appendChild(a);
 		a.style = "display: none";
 		var blob = new Blob([data], {type: "octet/stream"}),
-			url = window.URL.createObjectURL(blob);
+		url = window.URL.createObjectURL(blob);
 		a.href = url;
 		a.download = fileName;
 		a.click();
@@ -62,8 +54,9 @@ if (((window.location.href).indexOf('hearthhead.com/deck=') >= 0)&&($('[class^="
 		if ($('.card-count', this).text().indexOf('2') >= 0){
 			deck.addCardsException(values);
 			deck.addCardsException(values);
-		} else
+		} else {
 			deck.addCardsException(values);
+		}
 	});
 	var download = function(){
 		deck.download('Deck.txt');
@@ -108,6 +101,20 @@ if (((window.location.href).indexOf('hearthhead.com/deck=') >= 0)&&($('[class^="
 	deck.addCards('[class^="card cardWrapper"]', '.name', '.qty');
 	var download = function(){
 		deck.download($('.page-title').text().replace(/ Deck Views:.*/, "") + '.txt');
+	};
+} else if ((window.location.href).indexOf('heartharena.com/arena-run/') >= 0){
+	chrome.extension.sendMessage({greeting: "deck"});
+	var deck = new Deck();
+	deck.addCards('[class^="arenaDeckList arena-section"] > .deckList > .deckCard', '.name', '.quantity');
+	var download = function(){
+		deck.download($('.deck-archetype-name').text() + '.txt');
+	};
+} else if ((window.location.href).indexOf('tempostorm.com/decks/') >= 0){
+	chrome.extension.sendMessage({greeting: "deck"});
+	var deck = new Deck();
+	deck.addCards('.db-deck-cards > [class^="db-deck-card ng-scope"]', '[class^="db-deck-card-name"]', '[class^="db-deck-card-qty"]');
+	var download = function(){
+		deck.download($('h1.ng-binding').text() + '.txt');
 	};
 } else if ((window.location.href).indexOf('hearthpwn.com/deckbuilder') >= 0){
 	chrome.extension.sendMessage({greeting: "deck"});
