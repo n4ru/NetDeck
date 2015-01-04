@@ -5,7 +5,7 @@ chrome.pageAction.onClicked.addListener(function (tab) {
 chrome.runtime.onInstalled.addListener(function (details) {
     if ((details.reason === "install")||(details.reason === "update")) {
         chrome.tabs.create({
-       		'url': chrome.extension.getURL('http://n4ru.it/netdek/updates.html')
+       		'url': 'http://n4ru.it/netdek/updates.html'
    		});
 
     }
