@@ -1,10 +1,10 @@
 /*
 
-jDeck is a JavaScript object for properly parsing Hearthstone decklists into a text file using jQuery selectors.
+jDeck helps properly parse Hearthstone decklists into a text file using jQuery.
 
 */
 
-var Deck = Class.create({
+var deck = {
 	init: function() {
 		this.list = [];
 	},
@@ -12,10 +12,8 @@ var Deck = Class.create({
 		var self = this;
 		$(elemone).each(function(i, el) {
 			var values = $(elemtwo, this).text();
+				self.list.push(values);
 			if ($(elemthree, this).text().indexOf('2') >= 0){
-				self.list.push(values);
-				self.list.push(values);
-			} else {
 				self.list.push(values);
 			}
 		});
@@ -37,7 +35,7 @@ var Deck = Class.create({
 		a.click();
 		window.URL.revokeObjectURL(url);
 	}
-});
+};
 
 
 var hideCharm = function(){
@@ -142,7 +140,7 @@ siteFunctions = {
 Object.keys(siteFunctions).forEach(function(site) {
   if (window.location.href.indexOf(site) > -1) { 
 	chrome.extension.sendMessage({greeting: "deck"});
-	deck = new Deck();
+	deck.init();
     siteFunctions[site](); 
   }
 })

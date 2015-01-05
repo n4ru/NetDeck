@@ -22,7 +22,7 @@
   "content_scripts": [
   {
 	"matches": ["*://*.hearthstonetopdeck.com/deck.php*","*://*.hss.io/decks/*","*://*.hearthhead.com/deck*","*://*.hearthpwn.com/deck*","*://*.gosugamers.net/hearthstone/decks/*-*","*://*.hearthstoneplayers.com/*-*","*://*.hearthstats.net/decks/*","*://*.heartharena.com/arena-run/*","*://*.tempostorm.com/decks/*"],
-	"js": ["jq.js","class.js","jdeck.js"]
+	"js": ["jq.js","jdeck.js"]
   }
 	]
 	
