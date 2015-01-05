@@ -12,5 +12,9 @@ chrome.runtime.onInstalled.addListener(function (details) {
 });
 
 chrome.extension.onMessage.addListener(function(req, sender, resp) {
-			chrome.pageAction.show(sender.tab.id);
+	if (req.greeting == "deck")	{ 
+		chrome.pageAction.show(sender.tab.id);
+	} else if (req.greeting == "hide")	{ 
+		chrome.pageAction.hide(sender.tab.id);
+	}
 });
