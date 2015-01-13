@@ -5,9 +5,6 @@ jDeck helps properly parse Hearthstone decklists into a text file using jQuery.
 */
 
 var deck = {
-	init: function() {
-		this.list = [];
-	},
 	addCards: function (elemone, elemtwo, elemthree) {
 		var self = this;
 		$(elemone).each(function(i, el) {
@@ -18,22 +15,14 @@ var deck = {
 			}
 		});
     },
-	addCardsException: function (cardname) {
-		var self = this;
-		self.list.push(cardname);
-	},
 	download: function (fileName) {
-		var self = this;
-		var data = self.list.join("\r\n");
-		var a = document.createElement("a");
-		document.body.appendChild(a);
-		a.style = "display: none";
-		var blob = new Blob([data], {type: "octet/stream"}),
-		url = window.URL.createObjectURL(blob);
-		a.href = url;
-		a.download = fileName;
-		a.click();
-		window.URL.revokeObjectURL(url);
+		var dl = $('<a>',{
+            style: 'display: none',
+            download: fileName,
+            href: window.URL.createObjectURL(new Blob([this.list.join("\r\n")], {type: "octet/stream"}))
+        });
+		dl[0].click();
+		window.URL.revokeObjectURL(dl[0].href);
 	}
 };
 
@@ -54,9 +43,9 @@ siteFunctions = {
   'hearthhead.com/deckbuilder': function() {
 	$('[class^="column displaytype-deck real"]').each(function(i, el) {
 		var values = $('a > img', this).attr("alt");
-		deck.addCardsException(values);
+		deck.list.push(values);
 		if ($('.card-count', this).text().indexOf('2') >= 0){
-			deck.addCardsException(values);
+			deck.list.push(values);
 		}
 	});
 	download = function(){
@@ -68,7 +57,7 @@ siteFunctions = {
 		var values = $.trim($(this).text().replace(/[\t\n]+/g,'')).split(' ');
 		var count = parseInt(values.shift(), 10);
 		for (var i = 0; i < count; i++) {
-			deck.addCardsException(values.join(' '));
+			deck.list.push(values.join(' '));
 		}
 	});
 	download = function(){
@@ -118,7 +107,7 @@ siteFunctions = {
 	};
   },
   'tempostorm.com/decks/': function() {
-	deck.addCards('.db-deck-cards > [class^="db-deck-card ng-scope"]', '[class^="db-deck-card-name"]', '[class^=	"db-deck-card-qty"]');
+	deck.addCards('.db-deck-cards > [class^="db-deck-card ng-scope"]', '[class^="db-deck-card-name"]', '[class^="db-deck-card-qty"]');
 	download = function(){
 		deck.download($('h1.ng-binding').text() + '.txt');
 	};
@@ -128,7 +117,7 @@ siteFunctions = {
 		var values = $('b', this).text();
 		var count = parseInt($('.inline-card-count', this).text().replace(/\D/g,''), 10)
 		for (var i = 0; i < count; i++) {
-			deck.addCardsException(values);
+			deck.list.push(values);
 		}
 	});
 	download = function(){
@@ -138,9 +127,9 @@ siteFunctions = {
 }
   
 Object.keys(siteFunctions).forEach(function(site) {
-  if (window.location.href.indexOf(site) > -1) { 
+  if (window.location.href.indexOf(site) >= 0) { 
 	chrome.extension.sendMessage({greeting: "deck"});
-	deck.init();
+	deck.list = [];
     siteFunctions[site](); 
   }
 })
