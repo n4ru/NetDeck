@@ -1,17 +1,12 @@
-/*
-
-jDeck helps properly parse Hearthstone decklists into a text file using jQuery.
-
-*/
-
 var deck = {
 	addCards: function (elemone, elemtwo, elemthree) {
 		var self = this;
 		$(elemone).each(function(i, el) {
 			var values = $(elemtwo, this).text();
-				self.list.push(values);
-			if ($(elemthree, this).text().indexOf('2') >= 0){
-				self.list.push(values);
+			self.list.push(values);
+			i = 0;
+			while (++i < $(elemthree, this).text().match(/(\d+)(?!.*\d)/g, '$1')) {
+				self.list.push(values);	
 			}
 		});
     },
@@ -23,9 +18,15 @@ var deck = {
         });
 		dl[0].click();
 		window.URL.revokeObjectURL(dl[0].href);
+	},
+	copy: function () { 
+  		copy = $("<textarea>").val(this.list.join("\r\n"));
+  		$('body').append(copy);
+  		copy.select();
+  		document.execCommand('copy');
+  		copy.remove();
 	}
 };
-
 
 var hideCharm = function(){
 	chrome.extension.sendMessage({greeting: "hide"});
@@ -130,6 +131,6 @@ Object.keys(siteFunctions).forEach(function(site) {
   if (window.location.href.indexOf(site) >= 0) { 
 	chrome.extension.sendMessage({greeting: "deck"});
 	deck.list = [];
-    siteFunctions[site](); 
+    siteFunctions[site]();
   }
 })

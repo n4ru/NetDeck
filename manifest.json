@@ -1,7 +1,7 @@
 {
   "update_url": "https://clients2.google.com/service/update2/crx",
   "manifest_version": 2,
-  "name": "net.DEK",
+  "name": "NetDeck",
   "description": "Download hearthstone decklists from popular sites.",
   "version": "2.3",
 	"icons": { "16": "key.png",
@@ -9,15 +9,21 @@
           "128": "key.png" },
   "page_action": {
 		"default_icon": "key.png",
-		"default_title": "Download this Deck"
+		"default_title": "Get this Deck"
   },
   "background": {
     "scripts": ["background.js"],
 	  "run_at": "document_end",
     "persistent": false
   },
+  "options_page": "options.html",
+  "options_ui": {
+    "page": "options.html"
+  },
   "permissions": [
-    "activeTab"
+    "activeTab",
+    "clipboardWrite",
+    "storage"
   ],
   "content_scripts": [
   {
