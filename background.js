@@ -4,7 +4,7 @@ chrome.pageAction.onClicked.addListener(function (tab) {
 			chrome.tabs.executeScript(tab.id, {"code": "download();"});
   		} 
   		if (pref.copy) {
-			chrome.tabs.executeScript(tab.id, {"code": "deck.copy();"});
+			chrome.tabs.executeScript(tab.id, {"code": "copy();"});
 			alert('Copied Deck to clipboard.')
   		} 
 	});
@@ -13,7 +13,7 @@ chrome.pageAction.onClicked.addListener(function (tab) {
 chrome.runtime.onInstalled.addListener(function (details) {
     if ((details.reason === "install")||(details.reason === "update")) {
         chrome.tabs.create({
-       		'url': 'http://n4ru.it/netdek/updates.html'
+       		'url': 'http://n4ru.it/netdeck/updates.html'
    		});
 
     }

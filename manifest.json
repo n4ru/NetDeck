@@ -2,8 +2,8 @@
   "update_url": "https://clients2.google.com/service/update2/crx",
   "manifest_version": 2,
   "name": "NetDeck",
-  "description": "Download hearthstone decklists from popular sites.",
-  "version": "2.3",
+  "description": "Get hearthstone decklists from popular sites.",
+  "version": "2.3.1",
 	"icons": { "16": "key.png",
            "48": "key.png",
           "128": "key.png" },
@@ -27,10 +27,9 @@
   ],
   "content_scripts": [
   {
-	"matches": ["*://*.hearthstonetopdeck.com/deck.php*","*://*.hss.io/decks/*","*://*.hearthhead.com/deck*","*://*.hearthpwn.com/deck*","*://*.gosugamers.net/hearthstone/decks/*-*","*://*.hearthstoneplayers.com/*-*","*://*.hearthstats.net/decks/*","*://*.heartharena.com/arena-run/*","*://*.tempostorm.com/decks/*"],
+	"matches": ["*://*.hearthstonetopdeck.com/deck.php*","*://*.hss.io/decks/*","*://*.hearthhead.com/deck*","*://*.hearthpwn.com/deck*","*://*.gosugamers.net/hearthstone/decks/*-*","*://*.hearthstoneplayers.com/*-*","*://*.hearthstats.net/decks/*","*://*.heartharena.com/arena-run/*","*://*.pro.eslgaming.com/hearthstone/legendary/*/decklist/*","*://*.tempostorm.com/*"],
 	"js": ["jq.js","jdeck.js"]
   }
 	]
 	
 }
-
