@@ -4,7 +4,7 @@ chrome.pageAction.onClicked.addListener(function (tab) {
 			chrome.tabs.executeScript(tab.id, {"code": "download();"});
   		} 
   		if (pref.copy) {
-			chrome.tabs.executeScript(tab.id, {"code": "copy();"});
+			chrome.tabs.executeScript(tab.id, {"code": "deck.copy();"});
 			alert('Copied Deck to clipboard.')
   		} 
 	});
