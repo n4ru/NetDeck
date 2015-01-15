@@ -31,25 +31,19 @@ var deck = {
 	}
 };
 
-var hideCharm = function(){
-	chrome.extension.sendMessage({greeting: "hide"});
-};
-
 siteFunctions = {
   'hearthhead.com/deck=': function() {
   	if ($('[class^="collapsed-card"] > .base').length){
   		update = function(){deck.addCards('[class^="collapsed-card"] > .base', '.name', '.count')};
 		download = function(){deck.download($('.text h1').text() + '.txt')};
-	} else { hideCharm(); }
+	} else { deckx = false; };
   },
   'hearthhead.com/deckbuilder': function() {
   	update = function() {
 		$('[class^="column displaytype-deck real"]').each(function(i, el) {
 			var values = $('a > img', this).attr("alt");
 			deck.list.push(values);
-			for (var i = 1; i < $('.card-count', this).text().match(/(\d+)(?!.*\d)/g, '$1'); i++) {
-				deck.list.push(values);	
-			}
+			for (var i = 1; i < $('.card-count', this).text().match(/(\d+)(?!.*\d)/g, '$1'); i++) {deck.list.push(values)}
 		});
   	};
 	download = function(){deck.download('Deck.txt')};
@@ -58,9 +52,7 @@ siteFunctions = {
 	$('.cardname').each(function(i, el) {
 		var values = $.trim($(this).text().replace(/[\t\n]+/g,'')).split(' ');
 		var count = parseInt(values.shift(), 10);
-		for (var i = 0; i < count; i++) {
-			deck.list.push(values.join(' '));
-		}
+		for (var i = 0; i < count; i++) {deck.list.push(values.join(' '))};
 	});
 	download = function(){deck.download($('#wrapper > #center > .headbar > div[style*="float:left"]').text() + '.txt')};
   },
@@ -72,7 +64,7 @@ siteFunctions = {
   	if ($('[class^="deck-list"]').length){
 		update = function(){deck.addCards('.card', '.card-title', '.card-count')};
 		download = function(){deck.download($('#post-title').text() + '.txt')};
-	} else { hideCharm(); }
+	} else { deckx = false; };
   },
   'hearthpwn.com/decks/': function() {
 	update = function(){deck.addCards('.even, .odd', 'b', '.col-name')};
@@ -82,20 +74,20 @@ siteFunctions = {
   	if ($('.deckBuilderCardsWrapper').length){
 		update = function(){deck.addCards('[class^="card cardWrapper"]', '.name', '.qty')};
 		download = function(){deck.download($('.page-title').text().replace(/ Deck Views:.*/, "") + '.txt')};
-  	} else { hideCharm(); }
+  	} else { deckx = false; };
   },
   'hss.io/decks/': function() {
   	if ($('.deckBuilderCardsWrapper').length){
 		update = function(){deck.addCards('[class^="card cardWrapper"]', '.name', '.qty')};
 		download = function(){deck.download($('.page-title').text().replace(/ Deck Views:.*/, "") + '.txt')};
-  	} else { hideCharm(); }
+  	} else { deckx = false; };
   },
   'heartharena.com/arena-run/': function() {
 	update = function(){deck.addCards('[class^="arenaDeckList arena-section"] > .deckList > .deckCard', '.name', '.quantity')};
 	download = function(){deck.download($('.deck-archetype-name').text() + '.txt')};
   },
   'tempostorm.com': function() {
-	function poll() {if($('.db-deck-cards').length) {chrome.extension.sendMessage({greeting: "deck"})} else {hideCharm()}};
+	function poll() {if($('.db-deck-cards').length) { deckx = true; } else { deckx = false; }};
 	setInterval(poll, 100);
 	update = function(){deck.addCards('.db-deck-cards > [class^="db-deck-card ng-scope"]', '[class^="db-deck-card-name"]', '[class^="db-deck-card-qty"]')};
 	download = function(){deck.download($('h1.ng-binding').text() + '.txt')};
@@ -107,7 +99,7 @@ siteFunctions = {
 			var count = parseInt($('.inline-card-count', this).text().replace(/\D/g,''), 10)
 			for (var i = 0; i < count; i++) {
 				deck.list.push(values);
-			}
+			};
 		});
   	};
 	download = function(){deck.download($('.deck-name-container > h2').text() + '.txt')};
@@ -116,13 +108,18 @@ siteFunctions = {
   	if ($('.decklist_compact').length){
 		update = function(){deck.addCards('.carditem_container', '[class^="name"]', '[class^="num"]')};
 		download = function(){deck.download($('h3').text() + '.txt')};
-	} else { hideCharm(); }
+	} else { deckx = false; }
   }
 }
-  
+
+deckx = false;
+
 Object.keys(siteFunctions).forEach(function(site) {
-  if (window.location.href.indexOf(site) >= 0) { 
-	chrome.extension.sendMessage({greeting: "deck"});
-    siteFunctions[site]();
-  }
-})
+  	if (window.location.href.indexOf(site) >= 0) {
+  		deckx = true;
+    	siteFunctions[site]();
+    		if (deck){chrome.extension.sendMessage({greeting: "trigger"})} else {alert('Deck not found.')};
+  	}
+});
+
+if (!deckx){alert('Site not supported or deck not found.')};

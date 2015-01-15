@@ -3,13 +3,12 @@
   "manifest_version": 2,
   "name": "NetDeck",
   "description": "Get hearthstone decklists from popular sites.",
-  "version": "2.3.1",
+  "version": "2.3.2",
 	"icons": { "16": "key.png",
            "48": "key.png",
           "128": "key.png" },
   "page_action": {
-		"default_icon": "key.png",
-		"default_title": "Get this Deck"
+		"default_icon": "key.png"
   },
   "background": {
     "scripts": ["background.js"],
@@ -25,11 +24,8 @@
     "clipboardWrite",
     "storage"
   ],
-  "content_scripts": [
-  {
-	"matches": ["*://*.hearthstonetopdeck.com/deck.php*","*://*.hss.io/decks/*","*://*.hearthhead.com/deck*","*://*.hearthpwn.com/deck*","*://*.gosugamers.net/hearthstone/decks/*-*","*://*.hearthstoneplayers.com/*-*","*://*.hearthstats.net/decks/*","*://*.heartharena.com/arena-run/*","*://*.pro.eslgaming.com/hearthstone/legendary/*/decklist/*","*://*.tempostorm.com/*"],
-	"js": ["jq.js","jdeck.js"]
-  }
-	]
-	
+  "web_accessible_resources": [
+    "jq.js", 
+    "jDeck.js"
+  ]
 }
