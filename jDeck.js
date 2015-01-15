@@ -88,6 +88,7 @@ siteFunctions = {
   },
   'tempostorm.com': function() {
 	function poll() {if($('.db-deck-cards').length) { deckx = true; } else { deckx = false; }};
+	poll();
 	setInterval(poll, 100);
 	update = function(){deck.addCards('.db-deck-cards > [class^="db-deck-card ng-scope"]', '[class^="db-deck-card-name"]', '[class^="db-deck-card-qty"]')};
 	download = function(){deck.download($('h1.ng-binding').text() + '.txt')};
@@ -118,7 +119,7 @@ Object.keys(siteFunctions).forEach(function(site) {
   	if (window.location.href.indexOf(site) >= 0) {
   		deckx = true;
     	siteFunctions[site]();
-    		if (deck){chrome.extension.sendMessage({greeting: "trigger"})} else {alert('Deck not found.')};
+    	if (deckx){chrome.extension.sendMessage({greeting: "trigger"})};
   	}
 });
 
