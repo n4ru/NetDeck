@@ -51,11 +51,13 @@ siteFunctions = {
 	download = function(){deck.download('Deck.txt')};
   },
   'hearthstonetopdeck.com/deck.php?': function() {
-	$('.cardname').each(function(i, el) {
-		var values = $.trim($(this).text().replace(/[\t\n]+/g,'')).split(' ');
-		var count = parseInt(values.shift(), 10);
-		for (var i = 0; i < count; i++) {deck.list.push(values.join(' '))};
-	});
+  	update = function() {
+		$('.cardname').each(function(i, el) {
+			var values = $.trim($(this).text().replace(/[\t\n]+/g,'')).split(' ');
+			var count = parseInt(values.shift(), 10);
+			for (var i = 0; i < count; i++) {deck.list.push(values.join(' '))};
+		});
+	}
 	download = function(){deck.download($('#wrapper > #center > .headbar > div[style*="float:left"]').text() + '.txt')};
   },
   'gosugamers.net/hearthstone/decks/': function() {
