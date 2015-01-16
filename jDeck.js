@@ -3,9 +3,11 @@ var deck = {
 		var self = this;
 		$(elemone).each(function(i, el) {
 			var values = $(elemtwo, this).text();
-			self.list.push(values);
-			for (var i = 1; i < $(elemthree, this).text().match(/(\d+)(?!.*\d)/g, '$1'); i++) {
-				self.list.push(values);	
+			if (values != '') {
+				self.list.push(values);
+				for (var i = 1; i < $(elemthree, this).text().match(/(\d+)(?!.*\d)/g, '$1'); i++) {
+					self.list.push(values);	
+				}
 			}
 		});
     },
