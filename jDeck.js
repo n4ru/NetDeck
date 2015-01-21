@@ -30,17 +30,6 @@ var deck = {
   		copydeck.select();
   		document.execCommand('copy');
   		copydeck.remove();
-	},
-	save: function() {
-		this.list = []; 
-		update();
-		currentDeck = {name: this.name, decklist: this.list};
-		chrome.storage.sync.get({decks: {}}, function(decks) {
-    		decksN = decks;
-    	console.log(decksN);
-  		});
-    	decksN.Object.keys(decks).length = currentDeck;
-		chrome.storage.sync.set({decks: decksN}, function() {});
 	}
 };
 
@@ -141,6 +130,5 @@ if (deckx){
    chrome.storage.sync.get({copy: true, download: false}, function (pref) {
   		if (pref.download) {deck.download();}
   		if (pref.copy) {deck.copy();alert('Copied Deck to clipboard.');}
-  		deck.save();
 	});
 } else {alert('Site not supported or deck not found.');}
