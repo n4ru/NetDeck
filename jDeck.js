@@ -22,8 +22,13 @@ var deck = {
 		dl[0].click();
 		window.URL.revokeObjectURL(dl[0].href);
 	},
-	copy: function () {
+	copy: function (pref) {
 		this.list = []; 
+		if (pref.hdtrack){
+			this.list.unshift("url:" + window.location.href);
+			this.list.unshift("name:" + deck.name);
+			this.list.unshift("netdeckimport");
+		} else {alert('Copied Deck to clipboard.');}
 		update();
   		copydeck = $("<textarea>").val(this.list.join("\r\n"));
   		$('body').append(copydeck);
@@ -127,8 +132,9 @@ Object.keys(siteFunctions).forEach(function(site) {
 });
 
 if (deckx){
-   chrome.storage.sync.get({copy: true, download: false}, function (pref) {
+   chrome.storage.sync.get({copy: true, download: false, hdtrack: false}, function (pref) {
+   	console.log(pref.hdtrack)
   		if (pref.download) {deck.download();}
-  		if (pref.copy) {deck.copy();alert('Copied Deck to clipboard.');}
+  		if (pref.copy||pref.hdtrack) {deck.copy(pref);}
 	});
 } else {alert('Site not supported or deck not found.');}

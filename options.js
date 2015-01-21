@@ -1,9 +1,11 @@
 function save_options() {
+  var hdtrack = document.getElementById('hdtrack').checked;
   var download = document.getElementById('download').checked;
   var copy = document.getElementById('copy').checked;
   chrome.storage.sync.set({
     copy: copy,
-    download: download
+    download: download,
+    hdtrack: hdtrack
   }, function() {
     var status = document.getElementById('status');
     status.textContent = 'Preferences saved.';
@@ -16,8 +18,10 @@ function save_options() {
 function restore_options() {
   chrome.storage.sync.get({
     copy: true,
-    download: false
+    download: false,
+    hdtrack: false
   }, function(items) {
+    document.getElementById('hdtrack').checked = items.hdtrack;
     document.getElementById('download').checked = items.download;
     document.getElementById('copy').checked = items.copy;
   });
