@@ -3,20 +3,20 @@ var deck = {
 		var self = this;
 		$(elemone).each(function(i, el) {
 			var values = $(elemtwo, this).text();
-			if (values != '') {
+			if (values) {
 				self.list.push(values);
-				for (var i = 1; i < $(elemthree, this).text().match(/(\d+)(?!.*\d)/g, '$1'); i++) {
+				for (var j = 1; j < $(elemthree, this).text().match(/(\d+)(?!.*\d)/g, '$1'); j++) {
 					self.list.push(values);	
 				}
 			}
 		});
     },
-	download: function (fileName) {
+	download: function () {
 		this.list = [];
 		update();
 		var dl = $('<a>',{
             style: 'display: none',
-            download: fileName,
+            download: this.name + '.txt',
             href: window.URL.createObjectURL(new Blob([this.list.join("\r\n")], {type: "octet/stream"}))
         });
 		dl[0].click();
@@ -30,92 +30,103 @@ var deck = {
   		copydeck.select();
   		document.execCommand('copy');
   		copydeck.remove();
+	},
+	save: function() {
+		this.list = []; 
+		update();
+		currentDeck = {name: this.name, decklist: this.list};
+		chrome.storage.sync.get({decks: {}}, function(decks) {
+    		decksN = decks;
+    	console.log(decksN);
+  		});
+    	decksN.Object.keys(decks).length = currentDeck;
+		chrome.storage.sync.set({decks: decksN}, function() {});
 	}
 };
 
 siteFunctions = {
   'hearthhead.com/deck=': function() {
   	if ($('[class^="collapsed-card"] > .base').length){
-  		update = function(){deck.addCards('[class^="collapsed-card"] > .base', '.name', '.count')};
-		download = function(){deck.download($('.text h1').text() + '.txt')};
-	} else { deckx = false; };
+  		update = function(){deck.addCards('[class^="collapsed-card"] > .base', '.name', '.count');};
+		deck.name = $('.text h1').text();
+	} else { deckx = false; }
   },
   'hearthhead.com/deckbuilder': function() {
   	update = function() {
 		$('[class^="column displaytype-deck real"]').each(function(i, el) {
 			var values = $('a > img', this).attr("alt");
 			deck.list.push(values);
-			for (var i = 1; i < $('.card-count', this).text().match(/(\d+)(?!.*\d)/g, '$1'); i++) {deck.list.push(values)}
+			for (var k = 1; k < $('.card-count', this).text().match(/(\d+)(?!.*\d)/g, '$1'); k++) {deck.list.push(values);}
 		});
   	};
-	download = function(){deck.download('Deck.txt')};
+	deck.name = 'Deck';
   },
   'hearthstonetopdeck.com/deck.php?': function() {
   	update = function() {
 		$('.cardname').each(function(i, el) {
 			var values = $.trim($(this).text().replace(/[\t\n]+/g,'')).split(' ');
 			var count = parseInt(values.shift(), 10);
-			for (var i = 0; i < count; i++) {deck.list.push(values.join(' '))};
+			for (var l = 0; l < count; l++) {deck.list.push(values.join(' '));}
 		});
-	}
-	download = function(){deck.download($('#wrapper > #center > .headbar > div[style*="float:left"]').text() + '.txt')};
+	};
+	deck.name = $('#wrapper > #center > .headbar > div[style*="float:left"]').text();
   },
   'gosugamers.net/hearthstone/decks/': function() {
-	update = function(){deck.addCards('[class^="card-link"]', '[class^="name card-quality"]', '.count')};
-	download = function(){deck.download($('h2 [class^="class-color"]').text() + '.txt')};
+	update = function(){deck.addCards('[class^="card-link"]', '[class^="name card-quality"]', '.count');};
+	deck.name = $('h2 [class^="class-color"]').text();
   },
   'hearthstoneplayers.com/': function() {
   	if ($('[class^="deck-list"]').length){
-		update = function(){deck.addCards('.card', '.card-title', '.card-count')};
-		download = function(){deck.download($('#post-title').text() + '.txt')};
-	} else { deckx = false; };
+		update = function(){deck.addCards('.card', '.card-title', '.card-count');};
+		deck.name = $('#post-title').text();
+	} else { deckx = false; }
   },
   'hearthpwn.com/decks/': function() {
-	update = function(){deck.addCards('.even, .odd', 'b', '.col-name')};
-	download = function(){deck.download($('.t-deck-title').text() + '.txt')};
+	update = function(){deck.addCards('.even, .odd', 'b', '.col-name');};
+	deck.name = $('.t-deck-title').text();
   },
   'hearthstats.net/decks/': function() {		
   	if ($('.deckBuilderCardsWrapper').length){
-		update = function(){deck.addCards('[class^="card cardWrapper"]', '.name', '.qty')};
-		download = function(){deck.download($('.page-title').text().replace(/ Deck Views:.*/, "") + '.txt')};
-  	} else { deckx = false; };
+		update = function(){deck.addCards('[class^="card cardWrapper"]', '.name', '.qty');};
+		deck.name = $('.page-title').text().replace(/ Deck Views:.*/, "");
+  	} else { deckx = false; }
   },
   'hss.io/decks/': function() {
   	if ($('.deckBuilderCardsWrapper').length){
-		update = function(){deck.addCards('[class^="card cardWrapper"]', '.name', '.qty')};
-		download = function(){deck.download($('.page-title').text().replace(/ Deck Views:.*/, "") + '.txt')};
-  	} else { deckx = false; };
+		update = function(){deck.addCards('[class^="card cardWrapper"]', '.name', '.qty');};
+		deck.name = $('.page-title').text().replace(/ Deck Views:.*/, "");
+  	} else { deckx = false; }
   },
   'heartharena.com/arena-run/': function() {
-	update = function(){deck.addCards('[class^="arenaDeckList arena-section"] > .deckList > .deckCard', '.name', '.quantity')};
-	download = function(){deck.download($('.deck-archetype-name').text() + '.txt')};
+	update = function(){deck.addCards('[class^="arenaDeckList arena-section"] > .deckList > .deckCard', '.name', '.quantity');};
+	deck.name = $('.deck-archetype-name').text();
   },
   'tempostorm.com': function() {
-	function poll() {if($('.db-deck-cards').length) { deckx = true; } else { deckx = false; }};
+	function poll() {if($('.db-deck-cards').length) { deckx = true; } else { deckx = false; }}
 	poll();
 	setInterval(poll, 100);
-	update = function(){deck.addCards('.db-deck-cards > [class^="db-deck-card ng-scope"]', '[class^="db-deck-card-name"]', '[class^="db-deck-card-qty"]')};
-	download = function(){deck.download($('h1.ng-binding').text() + '.txt')};
+	update = function(){deck.addCards('.db-deck-cards > [class^="db-deck-card ng-scope"]', '[class^="db-deck-card-name"]', '[class^="db-deck-card-qty"]');};
+	deck.name = $('h1.ng-binding').text();
   },
   'hearthpwn.com/deckbuilder': function() {
   	update = function(){
 		$('.even, .odd').each(function(i, el) {
 			var values = $('b', this).text();
-			var count = parseInt($('.inline-card-count', this).text().replace(/\D/g,''), 10)
-			for (var i = 0; i < count; i++) {
+			var count = parseInt($('.inline-card-count', this).text().replace(/\D/g,''), 10);
+			for (var m = 0; m < count; m++) {
 				deck.list.push(values);
-			};
+			}
 		});
   	};
-	download = function(){deck.download($('.deck-name-container > h2').text() + '.txt')};
+	deck.name = $('.deck-name-container > h2').text();
   },
   'pro.eslgaming.com/hearthstone/legendary/': function() {
   	if ($('.decklist_compact').length){
-		update = function(){deck.addCards('.carditem_container', '[class^="name"]', '[class^="num"]')};
-		download = function(){deck.download($('h3').text() + '.txt')};
+		update = function(){deck.addCards('.carditem_container', '[class^="name"]', '[class^="num"]');};
+		deck.name = $('h3').text();
 	} else { deckx = false; }
   }
-}
+};
 
 deckx = false;
 
@@ -123,8 +134,13 @@ Object.keys(siteFunctions).forEach(function(site) {
   	if (window.location.href.indexOf(site) >= 0) {
   		deckx = true;
     	siteFunctions[site]();
-    	if (deckx){chrome.extension.sendMessage({greeting: "trigger"})};
   	}
 });
 
-if (!deckx){alert('Site not supported or deck not found.')};
+if (deckx){
+   chrome.storage.sync.get({copy: true, download: false}, function (pref) {
+  		if (pref.download) {deck.download();}
+  		if (pref.copy) {deck.copy();alert('Copied Deck to clipboard.');}
+  		deck.save();
+	});
+} else {alert('Site not supported or deck not found.');}
