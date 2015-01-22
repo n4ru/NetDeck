@@ -24,7 +24,20 @@ function restore_options() {
     document.getElementById('hdtrack').checked = items.hdtrack;
     document.getElementById('download').checked = items.download;
     document.getElementById('copy').checked = items.copy;
+    nocopy();
   });
 }
+
+function nocopy() {
+  if (document.getElementById('hdtrack').checked) {
+    document.getElementById('copy').checked = false;
+    document.getElementById('copy').disabled = true;
+  }
+  if (!document.getElementById('hdtrack').checked) {
+    document.getElementById('copy').disabled = false;
+  }
+}
+
 document.addEventListener('DOMContentLoaded', restore_options);
 document.getElementById('save').addEventListener('click', save_options);
+document.getElementById('hdtrack').addEventListener('click', nocopy);
