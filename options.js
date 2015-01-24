@@ -17,9 +17,9 @@ function save_options() {
 
 function restore_options() {
   chrome.storage.sync.get({
-    copy: true,
+    copy: false,
     download: false,
-    hdtrack: false
+    hdtrack: true
   }, function(items) {
     document.getElementById('hdtrack').checked = items.hdtrack;
     document.getElementById('download').checked = items.download;
