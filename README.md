@@ -7,17 +7,22 @@ Features:
 =========
 - **Import** decks directly into Hearthstone and Deck Tracker.
 - **Download** or **Copy** decklists with a single button.
-- **Supported Sites**:
- - http://hearthstonetopdeck.com
- - http://hearthstats.net
- - http://hss.io
- - http://hearthhead.com *(including deckbuilder)*
- - http://hearthpwn.com *(including deckbuilder)*
+- **Supported Sites**: 
+ - http://arenavalue.com
+ - http://elitedecks.net
  - http://gosugamers.net
- - http://hearthstoneplayers.com
- - http://tempostorm.com
  - http://heartharena.com
+ - http://hearthhead.com *(including deckbuilder)*
+ - http://hearthnews.fr
+ - http://hearthpwn.com *(including deckbuilder)*
+ - http://hearthstats.net / http://hss.io
+ - http://hearthstone-decks.com
+ - http://hearthstoneheroes.com
+ - http://hearthstoneplayers.com
+ - http://hearthstonetopdeck.com
+ - http://hearthstonetopdecks.com
  - http://pro.eslgaming.com
+ - http://tempostorm.com
 
 
 Download 
