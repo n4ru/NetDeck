@@ -35,7 +35,9 @@ var deck = {
   		copydeck.select();
   		document.execCommand('copy');
 		if (pref.hdtrack){
+			copydeck.hide();
   			setTimeout(function() {
+				copydeck.show();
   				copydeck.val(' ');
   				copydeck.select();
   				document.execCommand('copy');
@@ -44,6 +46,16 @@ var deck = {
   		} else {copydeck.remove();}
 	}
 };
+
+function getCardName(cardid) {
+	for(var z=0;z < Object.keys(cards_data).length;z++){
+		for(var i=0;i < cards_data[Object.keys(cards_data)[z]].length;i++){
+       		if(cards_data[Object.keys(cards_data)[z]][i].id == cardid) {
+        		return cards_data[Object.keys(cards_data)[z]][i].name;
+       		}
+		}
+	}
+}
 
 siteFunctions = {
   'hearthhead.com/deck=': function() {
@@ -62,7 +74,7 @@ siteFunctions = {
   	if ($('[class^="table table-bordered table-hover table-db"]').length){
   		update = function(){
 			$('[class^="table table-bordered table-hover table-db"] tbody tr').each(function(i, el) {
-				var values = $('a', this).attr("data-lang-de");
+				var values = $('a', this).attr("data-lang-en");
 				deck.list.push(values);
 				for (var k = 1; k < $('small', this).text().match(/(\d+)(?!.*\d)/g, '$1'); k++) {deck.list.push(values);}
 			});
@@ -70,24 +82,46 @@ siteFunctions = {
 		deck.name = $('.panel-primary > .panel-heading > .panel-title').text();
 	} else { deckx = false; }
   },
-  'arenavalue.com/s/': function() {
-  	update = function(){
-		$('[class^="deck screenshot"]').each(function(i, el) {
-			var values = $(this).attr("data-name");
-			var count = $(this).attr("data-count");
-			for (var l = 0; l < count; l++) {deck.list.push(values);}
-		});
-  	};
-	deck.name = 'ArenaValue ' + Math.floor((Math.random() * 1000) + 1);
+  'arenavalue.com/': function() {
+  	if ($('[class^="pull-left deck-caption"]').length){
+  		update = function(){
+			$('[class^="deck screenshot"]').each(function(i, el) {
+				var values = $(this).attr("data-name");
+				var count = $(this).attr("data-count");
+				for (var l = 0; l < count; l++) {deck.list.push(values);}
+			});
+		}
+  	} else { deckx = false; }
+	deck.name = $('#dprofile').text() + ' ' + $('.badge').first().text() + ' (' + $('#dvalue').text() + ')';
   },
   'hearthstone-decks.com/deck/': function() {
   	if ($('#liste_cartes').length){
-  		update = function(){deck.addCards('#liste_cartes tbody tr', '.zecha-popover a', '[class^="quantite"]');};
-		deck.name = $('.well h3').text().trim();
+  		update = function(){
+			$('#liste_cartes tbody tr').each(function(i, el) {
+				var values = getCardName($('.zecha-popover a', this).attr("real_id"));
+				if (values) {
+					deck.list.push(values);
+					for (var j = 1; j < $('[class^="quantite"]', this).text(); j++) {
+						deck.list.push(values);	
+					}
+				}
+			});
+  		};
+		deck.name = $('.well h3').first().text();
 	} else { deckx = false; }
   },
-  'hearthnews.fr/deck/': function() {
-  	update = function(){deck.addCards('[class^="cards_in_deck"]', '[class^="rarity"]', '.count');};
+  'hearthnews.fr/decks/': function() {
+  	update = function(){
+		$('.deck_card_list tbody tr').each(function(i, el) {
+			var values = getCardName($('.real_id', this).attr("real_id"));
+			if (values) {
+				deck.list.push(values);
+				for (var j = 1; j < $('.real_id', this).attr("nb_card"); j++) {
+					deck.list.push(values);	
+				}
+			}
+		});
+	};
 	deck.name = $('[class^="deckName"]').text();
   },
   'hearthhead.com/deckbuilder': function() {
@@ -98,7 +132,7 @@ siteFunctions = {
 			for (var k = 1; k < $('.card-count', this).text().match(/(\d+)(?!.*\d)/g, '$1'); k++) {deck.list.push(values);}
 		});
   	};
-	deck.name = 'Deck ' + Math.floor((Math.random() * 1000) + 1);
+	deck.name = 'Deckbuilder';
   },
   'hearthstonetopdecks.com/decks/': function() {
   	if ($('#canvasCost').length){
@@ -120,7 +154,8 @@ siteFunctions = {
 			for (var l = 0; l < count; l++) {deck.list.push(values.join(' '));}
 		});
 	};
-	deck.name = $('#wrapper > #center > .headbar > div[style*="float:left"]').text();
+	hsName = (/\d - (.*) - ([a-zA-Z0-9 ]+)/g).exec($('#wrapper > #center > .headbar > div[style*="float:left"]').text());
+	deck.name = hsName[1] + ' (' + hsName[2] + ')';
   },
   'gosugamers.net/hearthstone/decks/': function() {
 	update = function(){deck.addCards('[class^="card-link"]', '[class^="name card-quality"]', '.count');};
@@ -129,7 +164,7 @@ siteFunctions = {
   'hearthstoneplayers.com/': function() {
   	if ($('[class^="deck-list"]').length){
 		update = function(){deck.addCards('.card', '.card-title', '.card-count');};
-		deck.name = $('#post-title').text();
+		deck.name = $('#deck-list-title').text();
 	} else { deckx = false; }
   },
   'hearthpwn.com/decks/': function() {
@@ -150,7 +185,7 @@ siteFunctions = {
   },
   'heartharena.com/arena-run/': function() {
 	update = function(){deck.addCards('[class^="arenaDeckList arena-section"] > .deckList > .deckCard', '.name', '.quantity');};
-	deck.name = $('.deck-archetype-name').text();
+	deck.name = $('.deck-archetype-name').text() + ' (' + $('.deck-tier-score span').text() + ')';
   },
   'tempostorm.com': function() {
 	function poll() {if($('.db-deck-cards').length) { deckx = true; } else { deckx = false; }}
@@ -174,7 +209,7 @@ siteFunctions = {
   'pro.eslgaming.com/hearthstone/legendary/': function() {
   	if ($('.decklist_compact').length){
 		update = function(){deck.addCards('.carditem_container', '[class^="name"]', '[class^="num"]');};
-		deck.name = $('h3').text();
+		deck.name = $('h3').text() + ' (' + $('.quickinfo a').first().text() + ')';
 	} else { deckx = false; }
   }
 };

@@ -1,5 +1,6 @@
 chrome.pageAction.onClicked.addListener(function (tab) {
 	if (!window.jQuery) {chrome.tabs.executeScript(tab.id, {file: 'jq.js'})}
+	chrome.tabs.executeScript(tab.id, {file: 'cards.js'});
 	chrome.tabs.executeScript(tab.id, {file: 'jDeck.js'});
 });
 
