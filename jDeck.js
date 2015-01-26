@@ -224,7 +224,7 @@ Object.keys(siteFunctions).forEach(function(site) {
 });
 
 if (deckx){
-   chrome.storage.sync.get({copy: true, download: false, hdtrack: false}, function (pref) {
+   chrome.storage.sync.get({copy: false, download: false, hdtrack: true}, function (pref) {
   		if (pref.download) {deck.download();}
   		if (pref.copy||pref.hdtrack) {deck.copy(pref);}
 	});
