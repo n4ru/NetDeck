@@ -91,19 +91,17 @@ siteFunctions = {
 				for (var l = 0; l < count; l++) {deck.list.push(values);}
 			});
 		}
+		deck.name = $('#dprofile').text() + ' ' + $('.badge').first().text() + ' (' + $('#dvalue').text() + ')';
   	} else { deckx = false; }
-	deck.name = $('#dprofile').text() + ' ' + $('.badge').first().text() + ' (' + $('#dvalue').text() + ')';
   },
   'hearthstone-decks.com/deck/': function() {
   	if ($('#liste_cartes').length){
   		update = function(){
 			$('#liste_cartes tbody tr').each(function(i, el) {
 				var values = getCardName($('.zecha-popover a', this).attr("real_id"));
-				if (values) {
-					deck.list.push(values);
-					for (var j = 1; j < $('[class^="quantite"]', this).text(); j++) {
-						deck.list.push(values);	
-					}
+				deck.list.push(values);
+				for (var j = 1; j < $('[class^="quantite"]', this).text(); j++) {
+					deck.list.push(values);	
 				}
 			});
   		};
@@ -114,11 +112,9 @@ siteFunctions = {
   	update = function(){
 		$('.deck_card_list tbody tr').each(function(i, el) {
 			var values = getCardName($('.real_id', this).attr("real_id"));
-			if (values) {
-				deck.list.push(values);
-				for (var j = 1; j < $('.real_id', this).attr("nb_card"); j++) {
-					deck.list.push(values);	
-				}
+			deck.list.push(values);
+			for (var j = 1; j < $('.real_id', this).attr("nb_card"); j++) {
+				deck.list.push(values);	
 			}
 		});
 	};
@@ -188,11 +184,10 @@ siteFunctions = {
 	deck.name = $('.deck-archetype-name').text() + ' (' + $('.deck-tier-score span').text() + ')';
   },
   'tempostorm.com': function() {
-	function poll() {if($('.db-deck-cards').length) { deckx = true; } else { deckx = false; }}
-	poll();
-	setInterval(poll, 100);
-	update = function(){deck.addCards('.db-deck-cards > [class^="db-deck-card ng-scope"]', '[class^="db-deck-card-name"]', '[class^="db-deck-card-qty"]');};
-	deck.name = $('h1.ng-binding').text();
+	if($('.db-deck-cards').length) { 
+		update = function(){deck.addCards('.db-deck-cards > [class^="db-deck-card ng-scope"]', '[class^="db-deck-card-name"]', '[class^="db-deck-card-qty"]');};
+		deck.name = $('h1.ng-binding').text();
+	} else { deckx = false; }
   },
   'hearthpwn.com/deckbuilder': function() {
   	update = function(){
