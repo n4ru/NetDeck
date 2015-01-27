@@ -150,7 +150,7 @@ siteFunctions = {
 			for (var l = 0; l < count; l++) {deck.list.push(values.join(' '));}
 		});
 	};
-	hsName = (/\d - (.*) - ([a-zA-Z0-9 ]+)/g).exec($('#wrapper > #center > .headbar > div[style*="float:left"]').text());
+	hsName = (/\d - (.*) - (.*)/g).exec($('#wrapper > #center > .headbar > div[style*="float:left"]').text());
 	deck.name = hsName[1] + ' (' + hsName[2] + ')';
   },
   'gosugamers.net/hearthstone/decks/': function() {
