@@ -6,7 +6,7 @@ chrome.pageAction.onClicked.addListener(function (tab) {
 
 chrome.runtime.onInstalled.addListener(function (details) {
     if ((details.reason === "install")||(details.reason === "update")) {
-        chrome.tabs.create({'url': 'http://n4ru.it/netdeck/'});
+        chrome.tabs.create({'url': 'http://netdeck.n4ru.it/'});
     }
 });
 

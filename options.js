@@ -30,7 +30,6 @@ function restore_options() {
 
 function nocopy() {
   if (document.getElementById('hdtrack').checked) {
-    document.getElementById('copy').checked = false;
     document.getElementById('copy').disabled = true;
   }
   if (!document.getElementById('hdtrack').checked) {
