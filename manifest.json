@@ -3,7 +3,7 @@
   "manifest_version": 2,
   "name": "NetDeck",
   "description": "Get hearthstone decklists from popular sites.",
-  "version": "2.4",
+  "version": "2.4.1",
 	"icons": { "16": "key.png",
            "48": "key.png",
           "128": "key.png" },
