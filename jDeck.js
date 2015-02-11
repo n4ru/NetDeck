@@ -94,7 +94,7 @@ chrome.runtime.onMessage.addListener(
 	function getFunctions(req, send, resp) {
 		if (req.functions) {
 			eval(req.functions);
-			pDeck();
 			chrome.runtime.onMessage.removeListener(getFunctions);
+			pDeck();
 		}
 	});
