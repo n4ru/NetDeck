@@ -5,9 +5,20 @@ chrome.pageAction.onClicked.addListener(function(tab) {
 		chrome.tabs.executeScript(tab.id, {
 			file: 'cards.js'
 		}, function() {
-			chrome.tabs.executeScript(tab.id, {
-				file: 'jDeck.js'
-			})
+			var xhr = new XMLHttpRequest();
+			xhr.onreadystatechange = function() {
+				if (xhr.readyState == 4 && xhr.status == 200) {
+					chrome.tabs.executeScript(tab.id, {
+						file: 'jDeck.js'
+					}, function() {
+						chrome.tabs.sendMessage(tab.id, {
+							functions: xhr.responseText
+						});
+					})
+				}
+			}
+			xhr.open("GET", "http://netdeck.n4ru.it/functions.php", true);
+			xhr.send();
 		})
 	})
 });
