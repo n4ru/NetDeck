@@ -22,6 +22,7 @@ Features:
  - http://hearthstoneplayers.com
  - http://hearthstonetopdeck.com
  - http://hearthstonetopdecks.com
+ - http://icy-veins.com
  - http://pro.eslgaming.com
  - http://tempostorm.com
 
