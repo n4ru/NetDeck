@@ -49,6 +49,7 @@ siteFunctions = {
 					}
 				});
 			}
+			arena = true;
 			deck.name = $('#dprofile').text() + ' ' + $('.badge').first().text() + ' (' + $('#dvalue').text() + ')';
 		} else {
 			deckx = false;
@@ -188,6 +189,7 @@ siteFunctions = {
 	},
 	'heartharena.com/arena-run/': function() {
 		update = function() {
+			arena = true;
 			deck.addCards('[class^="arenaDeckList arena-section"] > .deckList > .deckCard', '.name', '.quantity');
 		};
 		deck.name = $('.deck-archetype-name').text() + ' (' + $('.deck-tier-score span').text() + ')';
