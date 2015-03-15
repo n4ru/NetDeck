@@ -31,11 +31,10 @@ var deck = {
 	copy: function(pref) {
 		this.list = [];
 		if (pref.hdtrack) {
-			console.log(arena)
 			this.list.unshift("url:" + window.location.href);
 			this.list.unshift("arena:" + arena);
 			this.list.unshift("name:" + deck.name.trim());
-			this.list.unshift("netdeckimport");
+			this.list.unshift("trackerimport");
 		} else {
 			alert('Copied Deck to clipboard.');
 		}
