@@ -189,9 +189,9 @@ siteFunctions = {
 	},
 	'heartharena.com/arena-run/': function() {
 		update = function() {
-			arena = true;
 			deck.addCards('[class^="arenaDeckList arena-section"] > .deckList > .deckCard', '.name', '.quantity');
 		};
+		arena = true;
 		deck.name = $('.deck-archetype-name').text() + ' (' + $('.deck-tier-score span').text() + ')';
 	},
 	'tempostorm.com': function() {

@@ -24,13 +24,21 @@ chrome.pageAction.onClicked.addListener(function(tab) {
 });
 
 chrome.runtime.onInstalled.addListener(function(details) {
-	if ((details.reason === "install") || (details.reason === "update")) {
+	if (details.reason === "install") {
 		chrome.tabs.create({
-			'url': 'http://netdeck.n4ru.it/'
+			'url': 'http://netdeck.n4ru.it/extension'
+		});
+	} else if (details.reason === "update") {
+		chrome.tabs.create({
+			'url': 'http://netdeck.n4ru.it/extension#update=true&CSUM=1'
 		});
 	}
 });
 
 chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
 	chrome.pageAction.show(tabId);
+});
+
+chrome.tabs.onActivated.addListener(function(activeInfo) {
+	chrome.pageAction.show(activeInfo.tabId);
 });
