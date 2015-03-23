@@ -121,7 +121,7 @@ siteFunctions = {
 				}
 			});
 		};
-		hsName = (/\d - (.*) - (.*)/g).exec($('#wrapper > #center > .headbar > div[style*="float:left"]').text());
+		hsName = (/\d - (.*) - (.*)/g).exec($('#wrapper > #center > .headbar > div[style*="left"]').text());
 		deck.name = hsName[1] + ' (' + hsName[2] + ')';
 	},
 	'gosugamers.net/hearthstone/decks/': function() {
