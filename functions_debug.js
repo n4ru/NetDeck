@@ -96,15 +96,9 @@ siteFunctions = {
 		deck.name = 'Deckbuilder';
 	},
 	'hearthstonetopdecks.com/decks/': function() {
-		if ($('#canvasCost').length) {
+		if ($('#deck-master').length) {
 			update = function() {
-				$('#classes li, #neutral li').each(function(i, el) {
-					var values = $.trim($(this).text().replace(/[\t\n]+/g, '')).split(' ');
-					var count = parseInt(values.shift(), 10);
-					for (var l = 0; l < count; l++) {
-						deck.list.push(values.join(' '));
-					}
-				});
+				deck.addCards('[class^="deck-class"] li', '.card-name', '.card-count');
 			};
 			deck.name = $('.entry-title').text();
 		} else {
