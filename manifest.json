@@ -4,16 +4,19 @@
   "name": "NetDeck",
   "homepage_url": "http://netdeck.n4ru.it",
   "description": "Get hearthstone decklists from popular sites.",
-  "version": "2.4.5",
-	"icons": { "16": "key.png",
-           "48": "key.png",
-          "128": "key.png" },
-  "page_action": {
-		"default_icon": "key.png"
+  "version": "2.5",
+  "icons": {
+    "16": "key.png",
+    "48": "key.png",
+    "128": "key.png"
+  },
+  "browser_action": {
+    "default_icon": "key.png",
+    "default_popup": "popup.html"
   },
   "background": {
     "scripts": ["background.js"],
-	  "run_at": "document_end",
+    "run_at": "document_end",
     "persistent": false
   },
   "options_page": "options.html",
@@ -23,20 +26,22 @@
   "permissions": [
     "activeTab",
     "clipboardWrite",
+    "notifications",
     "storage"
   ],
   "commands": {
-    "_execute_page_action": {
+    "savedeck": {
       "suggested_key": {
         "windows": "Ctrl+Shift+S",
         "mac": "Command+Shift+S",
         "chromeos": "Ctrl+Shift+S",
         "linux": "Ctrl+Shift+S"
-      }
+      },
+    "description": "Save current deck"
     }
   },
   "web_accessible_resources": [
-    "jq.js", 
+    "jq.js",
     "jDeck.js"
   ]
 }

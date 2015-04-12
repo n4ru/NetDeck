@@ -1,7 +1,17 @@
-// This resource is not included in the packaged extension - the latest stable version is minified and hosted online @ http://netdeck.n4ru.it/functions.php. 
+// This resource is not included in the packaged extension - the latest stable version is minified and hosted online @ http://netdeck.n4ru.it/functions.php.
 // This version of the file is used to test new site additions. Pass the debug parameter to get this file (http://netdeck.n4ru.it/functions.php?debug).
 
 siteFunctions = {
+	'netdeck.n4ru.it': function() {
+		if ($('blockquote em').length) {
+			update = function() {
+				deck.addCards('blockquote em', 'a', 'strong');
+			};
+			deck.name = $('#u28 p span').text();
+		} else {
+			deckx = false;
+		}
+	},
 	'hearthhead.com/deck=': function() {
 		if ($('[class^="collapsed-card"] > .base').length) {
 			update = function() {
@@ -38,6 +48,16 @@ siteFunctions = {
 			deckx = false;
 		}
 	},
+	'ls.duowan.com/deckbuilder/': function() {
+		if ($('.list-box').length) {
+			update = function() {
+				deck.addCards('.list-box ul li', 'a p', 'a span', 'zhCN');
+			}
+			deck.name = $('.t-1').first().text();
+		} else {
+			deckx = false;
+		}
+	},
 	'arenavalue.com/': function() {
 		if ($('[class^="pull-left deck-caption"]').length) {
 			update = function() {
@@ -59,7 +79,7 @@ siteFunctions = {
 		if ($('#liste_cartes').length) {
 			update = function() {
 				$('#liste_cartes tbody tr').each(function(i, el) {
-					var values = getCardName($('.zecha-popover a', this).attr("real_id"));
+					var values = getCardName($('.zecha-popover a', this).text(), 'name', 'frFR');
 					deck.list.push(values);
 					for (var j = 1; j < $('[class^="quantite"]', this).text(); j++) {
 						deck.list.push(values);
