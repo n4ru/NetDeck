@@ -41,6 +41,7 @@
   },
   "web_accessible_resources": [
     "jq.js",
+    "cards.js",
     "jDeck.js"
   ]
 }

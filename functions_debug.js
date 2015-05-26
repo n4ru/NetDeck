@@ -2,6 +2,31 @@
 // This version of the file is used to test new site additions. Pass the debug parameter to get this file (http://netdeck.n4ru.it/functions.php?debug).
 
 siteFunctions = {
+	'hearthbuilder.com/decks/': function() {
+		if ($('[class="table table-bordered table-striped cards-table"] tbody tr').length) {
+			update = function() {
+				$('[data-card-load]').each(function(i, el) {
+					var values = $(this).text().replace(/[\t\n]+/g, '').split('x ');
+					var count = parseInt(values[values.length - 1], 10) || 1;
+					if (count != 1) {
+						values.pop();
+					}
+					for (var l = 0; l < count; l++) {
+						deck.list.push(values.join(' '));
+					}
+				});
+			};
+			deck.name = $('h2').text();
+		} else {
+			deckx = false;
+		}
+	},
+	'hearthstone.judgehype.com/deck/': function() {
+		update = function() {
+			deck.addCards('[cellspacing="1"] tbody tr:gt(0)', 'font', 'b', 'frFR');
+		};
+		deck.name = $('h1').text().replace("Liste des decks HearthStone > ", "");
+	},
 	'hearthhead.com/deck=': function() {
 		if ($('[class^="collapsed-card"] > .base').length) {
 			update = function() {
