@@ -2,16 +2,6 @@
 // This version of the file is used to test new site additions. Pass the debug parameter to get this file (http://netdeck.n4ru.it/functions.php?debug).
 
 siteFunctions = {
-	'netdeck.n4ru.it': function() {
-		if ($('blockquote em').length) {
-			update = function() {
-				deck.addCards('blockquote em', 'a', 'strong');
-			};
-			deck.name = $('#u28 p span').text();
-		} else {
-			deckx = false;
-		}
-	},
 	'hearthhead.com/deck=': function() {
 		if ($('[class^="collapsed-card"] > .base').length) {
 			update = function() {
