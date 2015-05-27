@@ -13,16 +13,19 @@ Features:
  - http://elitedecks.net
  - http://gosugamers.net
  - http://heartharena.com
- - http://hearthhead.com *(including deckbuilder)*
+ - http://hearthbuilder.com
+ - http://hearthhead.com (including deckbuilder)
  - http://hearthnews.fr
- - http://hearthpwn.com *(including deckbuilder)*
+ - http://hearthpwn.com (including deckbuilder)
  - http://hearthstats.net / http://hss.io
  - http://hearthstone-decks.com
  - http://hearthstoneheroes.com
  - http://hearthstoneplayers.com
  - http://hearthstonetopdeck.com
  - http://hearthstonetopdecks.com
+ - http://hearthstone.judgehype.com
  - http://icy-veins.com
+ - http://ls.duowan.com
  - http://pro.eslgaming.com
  - http://tempostorm.com
 
