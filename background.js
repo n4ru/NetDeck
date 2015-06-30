@@ -34,21 +34,74 @@ chrome.pageAction.onClicked.addListener(function(tab) {
 chrome.runtime.onInstalled.addListener(function(details) {
     if (details.reason === "install") {
         chrome.tabs.create({
-            'url': 'http://netdeck.n4ru.it/?page_id=64'
+            'url': 'http://netdeck.n4ru.it/extension'
         });
     } else if (details.reason === "update") {
         chrome.notifications.create("update", opt = {
             type: "image",
             title: "NetDeck",
-            message: "NetDeck has been updated to 2.5!\nClick to see what's changed!",
+            message: "NetDeck has been updated to 3.0!\nClick to see what's changed!",
             iconUrl: "notif.png",
             imageUrl: "update.png"
         }, function() {
-            chrome.notifications.onClicked.addListener(function changelog() {
-                chrome.tabs.create({
-                    'url': 'http://netdeck.n4ru.it/?page_id=143'
-                });
+            chrome.notifications.onClicked.addListener(function(id) {
+                if (id == "update") {
+                    chrome.tabs.create({
+                        'url': 'http://netdeck.n4ru.it/updates'
+                    });
+                }
             })
         })
     }
 });
+
+
+checkNotifs = setInterval(function() {
+    chrome.storage.sync.get({
+        copy: false,
+        download: false,
+        discovery: true,
+        hdtrack: true
+    }, function(pref) {
+        if (pref.discovery) {
+            var xhrtwo = new XMLHttpRequest();
+            xhrtwo.onreadystatechange = function() {
+                if (xhrtwo.readyState == 4 && xhrtwo.status == 200) {
+                    newPost = JSON.parse(xhrtwo.responseText);
+                    chrome.storage.sync.get({
+                        post: '1'
+                    }, function(data) {
+                        if (data.post > newPost['ID']) {
+                            chrome.storage.sync.set({
+                                post: newPost['ID']
+                            })
+                            var xhrthree = new XMLHttpRequest();
+                            xhrthree.open("GET", newPost['image'].replace(/\\/));
+                            xhrthree.responseType = "blob";
+                            xhrthree.onload = function() {
+                                var blob = this.response;
+                                chrome.notifications.create("deck", opt = {
+                                    type: "basic",
+                                    title: newPost['post_title'],
+                                    message: "A new post has been added!\nClick to check it out!",
+                                    iconUrl: window.URL.createObjectURL(blob)
+                                }, function() {
+                                    chrome.notifications.onClicked.addListener(function(id) {
+                                        if (id == "deck") {
+                                            chrome.tabs.create({
+                                                'url': newPost['permalink'].replace(/\\/)
+                                            });
+                                        }
+                                    })
+                                })
+                            };
+                            xhrthree.send(null);
+                        }
+                    })
+                }
+            }
+            xhrtwo.open("GET", "http://netdeck.n4ru.it/notifs.php", true);
+            xhrtwo.send();
+        }
+    });
+}, 1800000)

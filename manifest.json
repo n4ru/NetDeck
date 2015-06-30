@@ -3,8 +3,8 @@
   "manifest_version": 2,
   "name": "NetDeck",
   "homepage_url": "http://netdeck.n4ru.it",
-  "description": "Get hearthstone decklists from popular sites.",
-  "version": "2.5",
+  "description": "Get hearthstone decklists from popular sites and explore the latest unique decks!",
+  "version": "3.0",
   "icons": {
     "16": "key.png",
     "48": "key.png",
