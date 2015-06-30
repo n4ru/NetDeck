@@ -34,7 +34,7 @@ chrome.pageAction.onClicked.addListener(function(tab) {
 chrome.runtime.onInstalled.addListener(function(details) {
     if (details.reason === "install") {
         chrome.tabs.create({
-            'url': 'http://netdeck.n4ru.it/extension'
+            'url': 'http://netdeck.n4ru.it/netdeck-extension/'
         });
     } else if (details.reason === "update") {
         chrome.notifications.create("update", opt = {
@@ -47,7 +47,7 @@ chrome.runtime.onInstalled.addListener(function(details) {
             chrome.notifications.onClicked.addListener(function(id) {
                 if (id == "update") {
                     chrome.tabs.create({
-                        'url': 'http://netdeck.n4ru.it/updates'
+                        'url': 'http://netdeck.n4ru.it/updates/'
                     });
                 }
             })
