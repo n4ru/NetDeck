@@ -62,6 +62,13 @@ chrome.runtime.onInstalled.addListener(function(details) {
         })
     }
 });
+popIt = function popIt(id) {
+    if (id.indexOf("deck") > -1) {
+        chrome.tabs.create({
+            'url': newPost['permalink'].replace(/\\/)
+        });
+    }
+}
 checkNotifs = setInterval(function() {
     chrome.storage.sync.get({
         copy: false,
@@ -70,6 +77,9 @@ checkNotifs = setInterval(function() {
         hdtrack: true
     }, function(pref) {
         if (pref.discovery) {
+            if (chrome.notifications.onClicked.hasListeners()) {
+                chrome.notifications.onClicked.removeListener(popIt);
+            }
             var xhrtwo = new XMLHttpRequest();
             xhrtwo.onreadystatechange = function() {
                 if (xhrtwo.readyState == 4 && xhrtwo.status == 200) {
@@ -86,19 +96,13 @@ checkNotifs = setInterval(function() {
                             xhrthree.responseType = "blob";
                             xhrthree.onload = function() {
                                 var blob = this.response;
-                                chrome.notifications.create("deck", opt = {
+                                chrome.notifications.create("deck" + Math.random(), opt = {
                                     type: "basic",
                                     title: newPost['post_title'],
                                     message: "A new post has been added!\nClick to check it out!",
                                     iconUrl: window.URL.createObjectURL(blob)
                                 }, function() {
-                                    chrome.notifications.onClicked.addListener(function(id) {
-                                        if (id == "deck") {
-                                            chrome.tabs.create({
-                                                'url': newPost['permalink'].replace(/\\/)
-                                            });
-                                        }
-                                    })
+                                    chrome.notifications.onClicked.addListener(popIt)
                                 })
                             };
                             xhrthree.send(null);
