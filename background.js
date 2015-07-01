@@ -33,6 +33,17 @@ chrome.runtime.onInstalled.addListener(function(details) {
         chrome.tabs.create({
             'url': 'http://netdeck.n4ru.it/netdeck-extension/'
         });
+        var xhrfour = new XMLHttpRequest();
+        xhrfour.onreadystatechange = function() {
+            if (xhrfour.readyState == 4 && xhrfour.status == 200) {
+                newPost = JSON.parse(xhrfour.responseText);
+                chrome.storage.sync.set({
+                    post: newPost['ID']
+                })
+            }
+        }
+        xhrfour.open("GET", "http://netdeck.n4ru.it/notifs.php", true);
+        xhrfour.send();
     } else if (details.reason === "update") {
         chrome.notifications.create("update", opt = {
             type: "image",
