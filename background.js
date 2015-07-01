@@ -1,11 +1,9 @@
 chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
     chrome.pageAction.show(tabId);
 });
-
 chrome.tabs.onActivated.addListener(function(activeInfo) {
     chrome.pageAction.show(activeInfo.tabId);
 });
-
 chrome.pageAction.onClicked.addListener(function(tab) {
     chrome.tabs.executeScript(tab.id, {
         file: 'jq.js'
@@ -30,7 +28,6 @@ chrome.pageAction.onClicked.addListener(function(tab) {
         })
     })
 });
-
 chrome.runtime.onInstalled.addListener(function(details) {
     if (details.reason === "install") {
         chrome.tabs.create({
@@ -54,8 +51,6 @@ chrome.runtime.onInstalled.addListener(function(details) {
         })
     }
 });
-
-
 checkNotifs = setInterval(function() {
     chrome.storage.sync.get({
         copy: false,
@@ -71,7 +66,7 @@ checkNotifs = setInterval(function() {
                     chrome.storage.sync.get({
                         post: '1'
                     }, function(data) {
-                        if (data.post > newPost['ID']) {
+                        if (parseInt(data.post) != newPost['ID']) {
                             chrome.storage.sync.set({
                                 post: newPost['ID']
                             })
@@ -104,4 +99,4 @@ checkNotifs = setInterval(function() {
             xhrtwo.send();
         }
     });
-}, 1800000)
+}, 300000)
