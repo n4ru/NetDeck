@@ -39,7 +39,7 @@ chrome.pageAction.onClicked.addListener(function(tab) {
 chrome.runtime.onInstalled.addListener(function(details) {
     if (details.reason === "install") {
         chrome.tabs.create({
-            'url': 'https://netdeck.n4ru.it/netdeck-extension/'
+            'url': 'https://netdeck.n4ru.it/getting-started-3/'
         });
         GET("https://netdeck.n4ru.it/notifs.php", function(data) {
             newPost = JSON.parse(data.responseText);
