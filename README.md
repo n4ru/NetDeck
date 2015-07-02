@@ -27,7 +27,7 @@ Features:
  - hearthstone.judgehype.com
  - icy-veins.com
  - ls.duowan.com
- - ls.duowan.com
+ - netdeck.n4ru.it
  - pro.eslgaming.com
  - tempostorm.com
 
