@@ -1,5 +1,5 @@
-// This resource is not included in the packaged extension - the latest stable version is minified and hosted online @ http://netdeck.n4ru.it/functions.php.
-// This version of the file is used to test new site additions. Pass the debug parameter to get this file (http://netdeck.n4ru.it/functions.php?debug).
+// This resource is not included in the packaged extension - the latest stable version is minified and hosted online @ https://netdeck.n4ru.it/functions.php.
+// This version of the file is used to test new site additions. Pass the debug parameter to get this file (https://netdeck.n4ru.it/functions.php?debug).
 siteFunctions = {
     'netdeck.n4ru.it': function() {
         if ($('h4.iconlist_title').eq(3).text() == "Export to Deck Tracker") {

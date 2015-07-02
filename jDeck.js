@@ -100,7 +100,7 @@ chrome.runtime.onMessage.addListener(function getFunctions(req, send, resp) {
             });
         } else {
             if (confirm('Site not supported or deck not found.\nWould you like to vote for support?')) {
-                $.get("http://netdeck.n4ru.it/vote.php?site=" + window.location.href.replace(/https*:\/\//,""));
+                $.get("https://netdeck.n4ru.it/vote.php?site=" + window.location.href.replace(/https*:\/\//,""));
             }
         }
     }

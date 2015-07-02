@@ -23,7 +23,7 @@ chrome.pageAction.onClicked.addListener(function(tab) {
                     })
                 }
             }
-            xhr.open("GET", "http://netdeck.n4ru.it/functions.php", true);
+            xhr.open("GET", "https://netdeck.n4ru.it/functions.php", true);
             xhr.send();
         })
     })
@@ -31,7 +31,7 @@ chrome.pageAction.onClicked.addListener(function(tab) {
 chrome.runtime.onInstalled.addListener(function(details) {
     if (details.reason === "install") {
         chrome.tabs.create({
-            'url': 'http://netdeck.n4ru.it/netdeck-extension/'
+            'url': 'https://netdeck.n4ru.it/netdeck-extension/'
         });
         var xhrfour = new XMLHttpRequest();
         xhrfour.onreadystatechange = function() {
@@ -42,7 +42,7 @@ chrome.runtime.onInstalled.addListener(function(details) {
                 })
             }
         }
-        xhrfour.open("GET", "http://netdeck.n4ru.it/notifs.php", true);
+        xhrfour.open("GET", "https://netdeck.n4ru.it/notifs.php", true);
         xhrfour.send();
     } else if (details.reason === "update") {
         chrome.notifications.create("update", opt = {
@@ -55,7 +55,7 @@ chrome.runtime.onInstalled.addListener(function(details) {
             chrome.notifications.onClicked.addListener(function(id) {
                 if (id == "update") {
                     chrome.tabs.create({
-                        'url': 'http://netdeck.n4ru.it/updates/'
+                        'url': 'https://netdeck.n4ru.it/updates/'
                     });
                 }
             })
@@ -110,7 +110,7 @@ checkNotifs = setInterval(function() {
                     })
                 }
             }
-            xhrtwo.open("GET", "http://netdeck.n4ru.it/notifs.php", true);
+            xhrtwo.open("GET", "https://netdeck.n4ru.it/notifs.php", true);
             xhrtwo.send();
         }
     });
