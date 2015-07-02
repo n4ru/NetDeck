@@ -1,3 +1,16 @@
+function GET(url, callback, type) {
+    var xhr = new XMLHttpRequest();
+    if (type) {
+        xhr.responseType = type;
+    }
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            callback(xhr);
+        }
+    }
+    xhr.open("GET", url, true);
+    xhr.send();
+}
 chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
     chrome.pageAction.show(tabId);
 });
@@ -11,20 +24,15 @@ chrome.pageAction.onClicked.addListener(function(tab) {
         chrome.tabs.executeScript(tab.id, {
             file: 'cards.js'
         }, function() {
-            var xhr = new XMLHttpRequest();
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState == 4 && xhr.status == 200) {
-                    chrome.tabs.executeScript(tab.id, {
-                        file: 'jDeck.js'
-                    }, function() {
-                        chrome.tabs.sendMessage(tab.id, {
-                            functions: xhr.responseText
-                        });
-                    })
-                }
-            }
-            xhr.open("GET", "https://netdeck.n4ru.it/functions.php", true);
-            xhr.send();
+            GET("https://netdeck.n4ru.it/functions.php", function(data) {
+                chrome.tabs.executeScript(tab.id, {
+                    file: 'jDeck.js'
+                }, function() {
+                    chrome.tabs.sendMessage(tab.id, {
+                        functions: data.responseText
+                    });
+                })
+            })
         })
     })
 });
@@ -33,17 +41,12 @@ chrome.runtime.onInstalled.addListener(function(details) {
         chrome.tabs.create({
             'url': 'https://netdeck.n4ru.it/netdeck-extension/'
         });
-        var xhrfour = new XMLHttpRequest();
-        xhrfour.onreadystatechange = function() {
-            if (xhrfour.readyState == 4 && xhrfour.status == 200) {
-                newPost = JSON.parse(xhrfour.responseText);
-                chrome.storage.sync.set({
-                    post: newPost['ID']
-                })
-            }
-        }
-        xhrfour.open("GET", "https://netdeck.n4ru.it/notifs.php", true);
-        xhrfour.send();
+        GET("https://netdeck.n4ru.it/notifs.php", function(data) {
+            newPost = JSON.parse(data.responseText);
+            chrome.storage.sync.set({
+                post: newPost['ID']
+            })
+        })
     } else if (details.reason === "update") {
         chrome.notifications.create("update", opt = {
             type: "image",
@@ -80,38 +83,29 @@ checkNotifs = setInterval(function() {
             if (chrome.notifications.onClicked.hasListeners()) {
                 chrome.notifications.onClicked.removeListener(popIt);
             }
-            var xhrtwo = new XMLHttpRequest();
-            xhrtwo.onreadystatechange = function() {
-                if (xhrtwo.readyState == 4 && xhrtwo.status == 200) {
-                    newPost = JSON.parse(xhrtwo.responseText);
-                    chrome.storage.sync.get({
-                        post: '1'
-                    }, function(data) {
-                        if (parseInt(data.post) != newPost['ID']) {
-                            chrome.storage.sync.set({
-                                post: newPost['ID']
+            GET("https://netdeck.n4ru.it/notifs.php", function(resp) {
+                newPost = JSON.parse(resp.responseText);
+                chrome.storage.sync.get({
+                    post: '1'
+                }, function(data) {
+                    if (parseInt(data.post) != newPost['ID']) {
+                        chrome.storage.sync.set({
+                            post: newPost['ID']
+                        })
+                        GET(newPost['image'].replace(/\\/), function(data) {
+                            var blob = data.response;
+                            chrome.notifications.create("deck" + Math.random(), opt = {
+                                type: "basic",
+                                title: newPost['post_title'],
+                                message: "A new post has been added!\nClick to check it out!",
+                                iconUrl: window.URL.createObjectURL(blob)
+                            }, function() {
+                                chrome.notifications.onClicked.addListener(popIt)
                             })
-                            var xhrthree = new XMLHttpRequest();
-                            xhrthree.open("GET", newPost['image'].replace(/\\/));
-                            xhrthree.responseType = "blob";
-                            xhrthree.onload = function() {
-                                var blob = this.response;
-                                chrome.notifications.create("deck" + Math.random(), opt = {
-                                    type: "basic",
-                                    title: newPost['post_title'],
-                                    message: "A new post has been added!\nClick to check it out!",
-                                    iconUrl: window.URL.createObjectURL(blob)
-                                }, function() {
-                                    chrome.notifications.onClicked.addListener(popIt)
-                                })
-                            };
-                            xhrthree.send(null);
-                        }
-                    })
-                }
-            }
-            xhrtwo.open("GET", "https://netdeck.n4ru.it/notifs.php", true);
-            xhrtwo.send();
+                        }, "blob")
+                    }
+                })
+            })
         }
     });
 }, 300000)
