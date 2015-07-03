@@ -51,7 +51,7 @@ chrome.runtime.onInstalled.addListener(function(details) {
         chrome.notifications.create("update", opt = {
             type: "image",
             title: "NetDeck",
-            message: "NetDeck has been updated to 3.0!\nClick to see what's changed!",
+            message: "NetDeck has been updated to 3.0.3!\nClick to see what's changed!",
             iconUrl: "notif.png",
             imageUrl: "update.png"
         }, function() {
@@ -59,6 +59,20 @@ chrome.runtime.onInstalled.addListener(function(details) {
                 if (id == "update") {
                     chrome.tabs.create({
                         'url': 'https://netdeck.n4ru.it/updates/'
+                    }, function(tab) {
+                        if (!tab) {
+                            chrome.windows.create({
+                                'url': 'https://netdeck.n4ru.it/updates/'
+                            }, function(win) {
+                                chrome.windows.update(win.id, {
+                                    focused: true
+                                })
+                            })
+                        } else {
+                            chrome.windows.update(tab.windowId, {
+                                focused: true
+                            })
+                        }
                     });
                 }
             })
@@ -69,6 +83,20 @@ popIt = function popIt(id) {
     if (id.indexOf("deck") > -1) {
         chrome.tabs.create({
             'url': newPost['permalink'].replace(/\\/)
+        }, function(tab) {
+            if (!tab) {
+                chrome.windows.create({
+                    'url': newPost['permalink'].replace(/\\/)
+                }, function(win) {
+                    chrome.windows.update(win.id, {
+                        focused: true
+                    })
+                })
+            } else {
+                chrome.windows.update(tab.windowId, {
+                    focused: true
+                })
+            }
         });
     }
 }
