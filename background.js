@@ -51,7 +51,7 @@ chrome.runtime.onInstalled.addListener(function(details) {
         chrome.notifications.create("update", opt = {
             type: "image",
             title: "NetDeck",
-            message: "NetDeck has been updated to 3.0.3!\nClick to see what's changed!",
+            message: "NetDeck has been updated to 3.0.4!\nClick to see what's changed!",
             iconUrl: "notif.png",
             imageUrl: "update.png"
         }, function() {
