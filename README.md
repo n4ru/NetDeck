@@ -11,6 +11,7 @@ Features:
 - **Discover** awesome new competitive decks that shake up the meta.
 - **Supported Sites**: 
  - arenavalue.com
+ - arenamastery.com
  - elitedecks.net
  - gosugamers.net
  - heartharena.com
@@ -25,10 +26,13 @@ Features:
  - hearthstonetopdeck.com
  - hearthstonetopdecks.com
  - hearthstone.judgehype.com
+ - hs.inven.co.kr
  - icy-veins.com
  - ls.duowan.com
  - netdeck.n4ru.it
+ - powned.it
  - pro.eslgaming.com
+ - teamarchon.com
  - tempostorm.com
 
 
