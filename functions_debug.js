@@ -2,11 +2,22 @@
 // This version of the file is used to test new site additions. Pass the debug parameter to get this file (https://netdeck.n4ru.it/functions.php?debug).
 siteFunctions = {
     'netdeck.n4ru.it': function() {
-        if ($('h4.iconlist_title').eq(3).text() == "Export to Deck Tracker") {
+        if ($('h4.iconlist_title:eq(3)').text() == "Export to Deck Tracker") {
             update = function() {
                 deck.addCards('.avia_textblock strong', '[title]', 'em')
             };
-            deck.name = $('.av-special-heading-tag').first().text();
+            deck.name = $('.av-special-heading-tag:eq(0)').text();
+        } else {
+            deckx = false;
+        }
+    },
+    'arenamastery.com/arena.php': function() {
+        if ($('#deckList').length) {
+            update = function() {
+                deck.addCards('#deckList li', 'a', '[id^="remaining"]');
+            };
+            arena = true;
+            deck.name = $('h1').text();
         } else {
             deckx = false;
         }
@@ -14,7 +25,7 @@ siteFunctions = {
     'hearthbuilder.com/decks/': function() {
         if ($('[class="table table-bordered table-striped cards-table"] tbody tr').length) {
             update = function() {
-                $('[data-card-load]').each(function(i, el) {
+                $('[class*="-rarity"] div').each(function(i, el) {
                     var values = $(this).text().replace(/[\t\n]+/g, '').split('x ');
                     var count = parseInt(values[values.length - 1], 10) || 1;
                     if (count != 1) {
@@ -34,7 +45,7 @@ siteFunctions = {
         update = function() {
             deck.addCards('[cellspacing="1"] tbody tr:gt(0)', 'font', 'b', 'frFR');
         };
-        deck.name = $('h1').text().replace("Liste des decks HearthStone > ", "");
+        deck.name = $('h1').text().replace("Liste des decks HearthStone > ");
     },
     'hearthhead.com/deck=': function() {
         if ($('[class^="collapsed-card"] > .base').length) {
@@ -42,6 +53,16 @@ siteFunctions = {
                 deck.addCards('[class^="collapsed-card"] > .base', '.name', '.count');
             };
             deck.name = $('.text h1').text();
+        } else {
+            deckx = false;
+        }
+    },
+    'powned.it/mazzi-hs/': function() {
+        if ($('#deck-guide tr').length) {
+            update = function() {
+                deck.addCards('#deck-guide tr', 'td span', 'td:has(span)', 'itIT');
+            };
+            deck.name = $('.dname').text();
         } else {
             deckx = false;
         }
@@ -68,6 +89,16 @@ siteFunctions = {
                 });
             }
             deck.name = $('.panel-primary > .panel-heading > .panel-title').text();
+        } else {
+            deckx = false;
+        }
+    },
+    'hs.inven.co.kr/dataninfo/deck/view.php?': function() {
+        if ($('.deck-card-left').length) {
+            update = function() {
+                deck.addCards('.deck-card-list ul.deck-card-table li:has(b)', 'b', 'span', 'koKR');
+            }
+            deck.name = $('.title-box-left .title').text();
         } else {
             deckx = false;
         }
@@ -139,10 +170,10 @@ siteFunctions = {
         };
         deck.name = 'Deckbuilder';
     },
-    'hearthstonetopdecks.com/decks/': function() {
-        if ($('#deck-master').length) {
+    'hearthstonetopdecks.com/': function() {
+        if ($('[class^="card-list"] li, [class^="deck-class"] li').length) {
             update = function() {
-                deck.addCards('[class^="deck-class"] li', '.card-name', '.card-count');
+                deck.addCards('[class^="card-list"] li, [class^="deck-class"] li', '.card-name', '.card-count');
             };
             deck.name = $('.entry-title').text();
         } else {
@@ -195,12 +226,7 @@ siteFunctions = {
                     }
                 });
             };
-            rgx = /[1-9]\. (.*) (.*)? Deck+â†‘top/;
-            $('h2').each(function() {
-                if (rgx.test($(this).text())) {
-                    deck.name = $(this).text().match(rgx)[1];
-                }
-            });
+            deck.name = $('h2:eq(1)').text().replace(/[1-9]\.  (.*) (.*)? Deck↑top/g, '$1');
         } else {
             deckx = false;
         }
@@ -215,7 +241,26 @@ siteFunctions = {
             deckx = false;
         }
     },
-    'hss.io/decks/': function() {
+    'teamarchon.com/decks/view/': function() {
+        if ($('.decklist').length) {
+            update = function() {
+                $('.decklist li:gt(0)').each(function(i, el) {
+                    var values = $('img', this).attr("alt");
+                    quantity = $('a div', this).text();
+                    deck.list.push(values);
+                    if (quantity) {
+                        for (var j = 1; j < quantity[quantity.length - 1]; j++) {
+                            deck.list.push(values);
+                        }
+                    }
+                });
+            }
+            deck.name = $('h1.page-title').text();
+        } else {
+            deckx = false;
+        }
+    },
+    'hss.io/d': function() {
         if ($('.deckBuilderCardsWrapper').length) {
             update = function() {
                 deck.addCards('[class^="card cardWrapper"]', '.name', '.qty');
@@ -246,7 +291,7 @@ siteFunctions = {
         update = function() {
             $('.even, .odd').each(function(i, el) {
                 var values = $('b', this).text();
-                var count = parseInt($('.inline-card-count', this).text().replace(/\D/g, ''), 10);
+                var count = parseInt($('.inline-card-count', this).text().replace(/\D/g), 10);
                 for (var m = 0; m < count; m++) {
                     deck.list.push(values);
                 }
