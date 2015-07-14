@@ -1,6 +1,10 @@
 // This resource is not included in the packaged extension - the latest stable version is minified and hosted online @ https://netdeck.n4ru.it/functions.php.
 // This version of the file is used to test new site additions. Pass the debug parameter to get this file (https://netdeck.n4ru.it/functions.php?debug).
 siteFunctions = {
+    '.jpg': function() {
+        deck.copy = null;
+        deck.download = null;
+    },
     'netdeck.n4ru.it': function() {
         if ($('h4.iconlist_title:eq(3)').text() == "Export to Deck Tracker") {
             update = function() {
@@ -148,13 +152,7 @@ siteFunctions = {
     },
     'hearthnews.fr/decks/': function() {
         update = function() {
-            $('.deck_card_list tbody tr').each(function(i, el) {
-                var values = getCardName($('.real_id', this).attr("real_id"));
-                deck.list.push(values);
-                for (var j = 1; j < $('.real_id', this).attr("nb_card"); j++) {
-                    deck.list.push(values);
-                }
-            });
+            deck.addCards('[class="cards_in_deck card"]', '[class*="rarity"]', '.count', 'frFR');
         };
         deck.name = $('[class^="deckName"]').text();
     },
