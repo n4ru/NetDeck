@@ -73,6 +73,15 @@ chrome.runtime.onMessage.addListener(function getFunctions(req, send, resp) {
                 siteFunctions[site]();
             }
         });
+        for (i = 0; i < unsupported.length; i++) {
+            if (window.location.href.indexOf(unsupported[i]) >= 0) {
+                deckx = true;
+                deck.copy = function() {};
+                deck.download = function() {};
+                alert("Not supported.");
+                return false;
+            }
+        };
         if (deckx) {
             chrome.storage.sync.get({
                 copy: false,
@@ -88,7 +97,7 @@ chrome.runtime.onMessage.addListener(function getFunctions(req, send, resp) {
             });
         } else {
             if (confirm('Site not supported or deck not found.\nWould you like to vote for support?')) {
-                $.get("https://netdeck.n4ru.it/vote.php?site=" + window.location.href.replace(/https*:\/\//,""));
+                $.get("https://netdeck.n4ru.it/vote.php?site=" + window.location.href.replace(/https*:\/\//, ""));
             }
         }
     }
@@ -96,31 +105,31 @@ chrome.runtime.onMessage.addListener(function getFunctions(req, send, resp) {
 
 function langFix(card) {
     return card
-    .replace(/Â|À|Å|Ã/g, "A")
-    .replace(/â|à|å|ã/g, "a")
-    .replace(/Ä/g, "AE")
-    .replace(/ä/g, "ae")
-    .replace(/Ç/g, "C")
-    .replace(/ç/g, "c")
-    .replace(/É|Ê|È|Ë/g, "E")
-    .replace(/é|ê|è|ë/g, "e")
-    .replace(/Ó|Ô|Ò|Õ|Ø/g, "O")
-    .replace(/ó|ô|ò|õ/g, "o")
-    .replace(/Ö/g, "OE")
-    .replace(/ö/g, "oe")
-    .replace(/Š/g, "S")
-    .replace(/š/g, "s")
-    .replace(/ß/g, "ss")
-    .replace(/Ú|Û|Ù/g, "U")
-    .replace(/ú|û|ù/g, "u")
-    .replace(/Ü/g, "UE")
-    .replace(/ü/g, "ue")
-    .replace(/Ý|Ÿ/g, "Y")
-    .replace(/ý|ÿ/g, "y")
-    .replace(/Ž/g, "Z")
-    .replace(/ž/, "z")
-    .replace(/[\s\`\"\'\’\xA0]/g)
-    .toLowerCase();
+        .replace(/Â|À|Å|Ã/g, "A")
+        .replace(/â|à|å|ã/g, "a")
+        .replace(/Ä/g, "AE")
+        .replace(/ä/g, "ae")
+        .replace(/Ç/g, "C")
+        .replace(/ç/g, "c")
+        .replace(/É|Ê|È|Ë/g, "E")
+        .replace(/é|ê|è|ë/g, "e")
+        .replace(/Ó|Ô|Ò|Õ|Ø/g, "O")
+        .replace(/ó|ô|ò|õ/g, "o")
+        .replace(/Ö/g, "OE")
+        .replace(/ö/g, "oe")
+        .replace(/Š/g, "S")
+        .replace(/š/g, "s")
+        .replace(/ß/g, "ss")
+        .replace(/Ú|Û|Ù/g, "U")
+        .replace(/ú|û|ù/g, "u")
+        .replace(/Ü/g, "UE")
+        .replace(/ü/g, "ue")
+        .replace(/Ý|Ÿ/g, "Y")
+        .replace(/ý|ÿ/g, "y")
+        .replace(/Ž/g, "Z")
+        .replace(/ž/, "z")
+        .replace(/[\s\`\"\'\’\xA0]/g)
+        .toLowerCase();
 }
 
 function getCardName(reference, type, lang) {

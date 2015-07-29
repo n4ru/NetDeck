@@ -1,14 +1,10 @@
 // This resource is not included in the packaged extension - the latest stable version is minified and hosted online @ https://netdeck.n4ru.it/functions.php.
 // This version of the file is used to test new site additions. Pass the debug parameter to get this file (https://netdeck.n4ru.it/functions.php?debug).
 siteFunctions = {
-    '.jpg': function() {
-        deck.copy = null;
-        deck.download = null;
-    },
     'netdeck.n4ru.it': function() {
         if ($('h4.iconlist_title:eq(3)').text() == "Export to Deck Tracker") {
             update = function() {
-                deck.addCards('.avia_textblock strong', '[title]', 'em')
+                deck.addCards('#tab-id-1-container strong', '[title]', 'em')
             };
             deck.name = $('.av-special-heading-tag:eq(0)').text();
         } else {
@@ -306,5 +302,41 @@ siteFunctions = {
         } else {
             deckx = false;
         }
-    }
+    },
+    'hearthstonechampion.com/': function() {
+        if ($('.deck-list.guide-deck-list').length) {
+            update = function() {
+                deck.addCards('.class-cards .card, .neutral-cards .card', '.card-title', '.card-count');
+            };
+            deck.name = $('#deck-list-title').text();
+        } else {
+            deckx = false;
+        }
+    }   
 };
+// Unsupported Sites
+unsupported = [
+    "netdeck.n4ru.it",
+    ".png",
+    ".jpg",
+    "gyazo.com",
+    "liquidhearth.com",
+    "millenium.org",
+    "2p.com",
+    "ebay.",
+    "imgur.com",
+    "instagram.com",
+    "battle.net",
+    "manacost.ru",
+    "blizzpro.com",
+    "reddit.",
+    "hearthzone.ru",
+    "trumpfans.com",
+    "hearthclub.com",
+    "github.",
+    "file:/",
+    "hearthstone.metabomb.net",
+    "google",
+    "youtube",
+    "facebook"
+];
