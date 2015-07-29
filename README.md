@@ -21,6 +21,7 @@ Features:
  - hearthpwn.com (including deckbuilder)
  - hearthstats.net / hss.io
  - hearthstone-decks.com
+ - hearthstonechampion.com
  - hearthstoneheroes.com
  - hearthstoneplayers.com
  - hearthstonetopdeck.com
