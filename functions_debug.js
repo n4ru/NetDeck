@@ -316,7 +316,6 @@ siteFunctions = {
 };
 // Unsupported Sites
 unsupported = [
-    "netdeck.n4ru.it",
     ".png",
     ".jpg",
     "gyazo.com",
@@ -336,7 +335,7 @@ unsupported = [
     "github.",
     "file:/",
     "hearthstone.metabomb.net",
-    "google",
-    "youtube",
-    "facebook"
+    "google.",
+    "youtube.",
+    "facebook."
 ];
