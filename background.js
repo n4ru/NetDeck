@@ -75,68 +75,10 @@ chrome.runtime.onInstalled.addListener(function(details) {
         */
     }
     GET("https://netdeck.n4ru.it/notifs.php", function(data) {
-        var ndcontext = chrome.contextMenus.create({
-            "title": "NetDeck",
-            "id": "ndmenu",
-            "contexts": ["all"]
-        });
         newPost = JSON.parse(data.responseText);
-        var ndsub2 = chrome.contextMenus.create({
-            "title": "Instant Find-a-Friend",
-            "parentId": ndcontext,
-            "id": "faf",
-            "contexts": ["all"]
-        });
-        var ndsub2 = chrome.contextMenus.create({
-            "title": "Interaction Compendium",
-            "parentId": ndcontext,
-            "id": "ic",
-            "contexts": ["all"]
-        });
-        var ndsub3 = chrome.contextMenus.create({
-            "title": "View Decks",
-            "parentId": ndcontext,
-            "id": "decks",
-            "contexts": ["all"]
-        });
-        var ndsub4 = chrome.contextMenus.create({
-            "type": "separator",
-            "parentId": ndcontext,
-            "id": "sep",
-            "contexts": ["all"]
-        });
-        var ndsub5 = chrome.contextMenus.create({
-            "title": "Feedback",
-            "parentId": ndcontext,
-            "id": "feedback",
-            "contexts": ["all"]
-        });
         chrome.storage.sync.set({
             post: newPost['ID']
         })
-        chrome.contextMenus.onClicked.addListener(function(info, tab) {
-            switch (info.menuItemId) {
-                case "faf":
-                    chrome.tabs.create({
-                        "url": "https://netdeck.n4ru.it/find-a-friend"
-                    })
-                    break;
-                case "ic":
-                    chrome.tabs.create({
-                        "url": "https://netdeck.n4ru.it/interaction-compendium/"
-                    })
-                    break;
-                case "decks":
-                    chrome.tabs.create({
-                        "url": "https://netdeck.n4ru.it/category/decks/"
-                    })
-                    break;
-                case "feedback":
-                    chrome.tabs.create({
-                        "url": "https://netdeck.n4ru.it/feedback/"
-                    })
-            }
-        });
     })
 });
 popIt = function popIt(id) {
@@ -160,6 +102,7 @@ popIt = function popIt(id) {
         });
     }
 }
+
 checkNotifs = setInterval(function() {
     chrome.storage.sync.get({
         copy: false,
@@ -197,3 +140,26 @@ checkNotifs = setInterval(function() {
         }
     });
 }, 300000)
+
+contextMenu = {
+    "find-a-friend": "Instant Find-a-Friend",
+    "interaction-compendium": "Interaction Compendium",
+    "category/decks": "View Decks",
+    "feedback": "Provide Feedback"
+}
+
+chrome.contextMenus.removeAll();
+
+for (var key in contextMenu) {
+    chrome.contextMenus.create({
+        "title": contextMenu[key],
+        "id": key,
+        "contexts": ["page"]
+    });
+}
+
+chrome.contextMenus.onClicked.addListener(function(info, tab) {
+    chrome.tabs.create({
+        "url": "https://netdeck.n4ru.it/" + info.menuItemId
+    })
+});
