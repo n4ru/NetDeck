@@ -337,5 +337,6 @@ unsupported = [
     "hearthstone.metabomb.net",
     "google.",
     "youtube.",
-    "facebook."
+    "facebook.",
+    "twitch.com"
 ];
