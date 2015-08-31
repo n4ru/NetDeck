@@ -114,11 +114,16 @@ siteFunctions = {
         }
     },
     'arenavalue.com/': function() {
-        if ($('[class^="pull-left deck-caption"]').length) {
+        if ($('#deck [class^="deck screenshot"]').length) {
             update = function() {
-                $('[class^="deck screenshot"]').each(function(i, el) {
-                    var values = $(this).attr("data-name");
-                    var count = $(this).attr("data-count");
+                $('#deck [class^="deck screenshot"]').each(function(i, el) {
+                    var values = $('[class^="pull-left deck-caption"] :not([class="deck-cost"])', this).text().replace(/ x ([0-9])*/, '');
+                    var count = $('[class^="pull-left deck-caption"] :not([class="deck-cost"])', this).text();
+                    if (count.match(/ x ([0-9])*/)) {
+                        count = count.match(/ x ([0-9])*/)[1];
+                    } else {
+                        count = 1;
+                    }
                     for (var l = 0; l < count; l++) {
                         deck.list.push(values);
                     }
@@ -312,7 +317,7 @@ siteFunctions = {
         } else {
             deckx = false;
         }
-    }   
+    }
 };
 // Unsupported Sites
 unsupported = [
