@@ -218,10 +218,10 @@ siteFunctions = {
         if ($('.deck_card_list').length) {
             update = function() {
                 $('.deck_card_list tbody tr td ul li').each(function(i, el) {
-                    var values = $.trim($(this).text().replace(/(  GvG)?|([\t\n])+/g, '')).split(' ');
-                    var count = parseInt(values.shift(), 10);
+                    var values = $('a', this).text();
+                    var count = parseInt($(this).text().match(/([0-9]+)x/)[1], 10);
                     for (var l = 0; l < count; l++) {
-                        deck.list.push(values.join(' '));
+                        deck.list.push(values);
                     }
                 });
             };
