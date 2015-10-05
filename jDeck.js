@@ -10,7 +10,7 @@ var deck = {
                 var values = $(elemtwo, this).text();
             }
             if (values) {
-                quantity = $(elemthree, this).text().trim().match(/(\d+)(?!.*\d)/g, '$1');
+                var quantity = $(elemthree, this).text().trim().match(/(\d+)(?!.*\d)/g, '$1');
                 self.list.push(values);
                 if (quantity) {
                     for (var j = 1; j < quantity[quantity.length - 1]; j++) {
@@ -105,6 +105,7 @@ chrome.runtime.onMessage.addListener(function getFunctions(req, send, resp) {
 
 function langFix(card) {
     return card
+        .trim()
         .replace(/Â|À|Å|Ã/g, "A")
         .replace(/â|à|å|ã/g, "a")
         .replace(/Ä/g, "AE")

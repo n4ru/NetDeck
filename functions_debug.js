@@ -57,6 +57,22 @@ siteFunctions = {
             deckx = false;
         }
     },
+    'playhs.es/mazos/cazador/item/': function() {
+        update = function() {
+        	for (var x = 0; x < 2; x++) {
+                $('.tablamolonaplayhs tbody:eq(1) tr:gt(0) td:nth-child(' + (3 * x + 2) + ')').each(function(i, el) {
+                    var values = getCardName(el.innerText, 'name', 'esES');
+                    var quantity = parseInt($('.tablamolonaplayhs tbody:eq(1) tr:gt(0) td:nth-child(' + (3 * x + 1) + '):eq(' + i + ')').text(), 10);
+                    if (quantity) {
+                        for (var j = 1; j <= quantity; j++) {
+                            deck.list.push(values);
+                        }
+                    }
+                })
+            };
+        };
+        deck.name = $('.itemTitle').text();
+    },
     'powned.it/mazzi-hs/': function() {
         if ($('#deck-guide tr').length) {
             update = function() {
@@ -179,7 +195,7 @@ siteFunctions = {
             deckx = false;
         }
     },
-    'hearthstonetopdeck.com/deck.php?': function() {
+    'hearthstonetopdeck.com/deck/': function() {
         update = function() {
             $('.cardname').each(function(i, el) {
                 var values = $.trim($(this).text().replace(/[\t\n]+/g, '')).split(' ');
@@ -189,8 +205,7 @@ siteFunctions = {
                 }
             });
         };
-        hsName = (/\d - (.*) - (.*)/g).exec($('#wrapper > #center > .headbar > div[style*="left"]').text());
-        deck.name = hsName[1] + ' (' + hsName[2] + ')';
+        deck.name = (/\d - (.* - .*)/g).exec($('.panel-title:eq(2)').text())[1];
     },
     'gosugamers.net/hearthstone/decks/': function() {
         update = function() {
