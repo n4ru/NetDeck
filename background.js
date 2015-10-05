@@ -144,7 +144,7 @@ checkNotifs = setInterval(function() {
 contextMenu = {
     "find-a-friend": "Instant Find-a-Friend",
     "interaction-compendium": "Interaction Compendium",
-    "category/decks": "View Decks",
+    "decks": "View Decks",
     "feedback": "Provide Feedback"
 }
 
