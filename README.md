@@ -1,9 +1,9 @@
+![NetDeck](https://lh3.googleusercontent.com/fT9j6h8CWPPSVHBKobKHOq-n6oWvQQNABkxlvoCw2XUpBehSJQELKRd6T3e7RuKf3x0c6vfH=s640-h400-e365-rw)
 
-![NetDeck](https://lh3.googleusercontent.com/mPybLodPLfAk4pHav1C4UkP5qu66K4NnkMdwb1_dg6WOJLHFJZHaGloyqNOP-2Qm8nvGlAaUbQ=s640-h400-e365-rw)
 
 Get the most popular hearthstone decks with the click of a button and explore the latest unique decks!
 
-Features:
+Features
 =========
 - **Import** decks directly into Hearthstone and Deck Tracker.
 - **Sync** decks directly to the web with one click using HearthStats through Deck Tracker.
@@ -40,10 +40,3 @@ Features:
 Download 
 =========
 Latest release [here](https://chrome.google.com/webstore/detail/netdeck/lpdbiakcpmcppnpchohihcbdnojlgeel)
-
-
-
-=========
-Donations:
-
-Paypal - n4ruexe@gmail.com | Bitcoin - 1BkCn4ruJCXUxdt2hygnL6AP7WTVXGVJT5
