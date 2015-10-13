@@ -31,6 +31,7 @@ Features
  - icy-veins.com
  - ls.duowan.com
  - netdeck.n4ru.it
+ - playhs.es
  - powned.it
  - pro.eslgaming.com
  - teamarchon.com
