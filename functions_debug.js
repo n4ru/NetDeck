@@ -305,7 +305,7 @@ siteFunctions = {
         update = function() {
             $('.even, .odd').each(function(i, el) {
                 var values = $('b', this).text();
-                var count = parseInt($('.inline-card-count', this).text().replace(/\D/g), 10);
+                var count = parseInt($('.inline-card-count', this).text().replace(/\D/g, ''), 10);
                 for (var m = 0; m < count; m++) {
                     deck.list.push(values);
                 }
