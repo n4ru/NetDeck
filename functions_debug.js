@@ -227,7 +227,7 @@ siteFunctions = {
         update = function() {
             deck.addCards('.even, .odd', 'b', '.col-name');
         };
-        deck.name = $('.t-deck-title').text();
+        deck.name = $('.deck-title').text();
     },
     'icy-veins.com/hearthstone/': function() {
         if ($('.deck_card_list').length) {
