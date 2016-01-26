@@ -59,7 +59,7 @@ siteFunctions = {
     },
     'playhs.es/mazos/cazador/item/': function() {
         update = function() {
-        	for (var x = 0; x < 2; x++) {
+            for (var x = 0; x < 2; x++) {
                 $('.tablamolonaplayhs tbody:eq(1) tr:gt(0) td:nth-child(' + (3 * x + 2) + ')').each(function(i, el) {
                     var values = getCardName(el.innerText, 'name', 'esES');
                     var quantity = parseInt($('.tablamolonaplayhs tbody:eq(1) tr:gt(0) td:nth-child(' + (3 * x + 1) + '):eq(' + i + ')').text(), 10);
@@ -329,6 +329,22 @@ siteFunctions = {
                 deck.addCards('.class-cards .card, .neutral-cards .card', '.card-title', '.card-count');
             };
             deck.name = $('#deck-list-title').text();
+        } else {
+            deckx = false;
+        }
+    },
+    'hearthbase.net/deck/?id=': function() {
+        if ($('.2u.card').length) {
+            update = function() {
+                $('.2u.card').each(function(i, el) {
+                    var values = getCardName($('[class="image fit"] img', this).attr('alt'), 'id', 'enUS');
+                    deck.list.push(values);
+                    if ($('.image.fit.x2', this).length) {
+                        deck.list.push(values);
+                    }
+                });
+            };
+            deck.name = 'Hearthbase Deck';
         } else {
             deckx = false;
         }

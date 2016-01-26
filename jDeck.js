@@ -106,6 +106,7 @@ chrome.runtime.onMessage.addListener(function getFunctions(req, send, resp) {
 function langFix(card) {
     return card
         .trim()
+        .replace(/\_/, "\ ")
         .replace(/Â|À|Å|Ã/g, "A")
         .replace(/â|à|å|ã/g, "a")
         .replace(/Ä/g, "AE")
@@ -134,14 +135,17 @@ function langFix(card) {
 }
 
 function getCardName(reference, type, lang) {
-    for (var z = 0; z < Object.keys(cards_data[lang]).length; z++) {
-        for (var i = 0; i < cards_data[lang][Object.keys(cards_data[lang])[z]].length; i++) {
-            thisCard = cards_data[lang][Object.keys(cards_data[lang])[z]][i][type];
-            if (langFix(thisCard) == langFix(reference)) {
-                if (type == 'id') {
-                    return cards_data['enUS'][Object.keys(cards_data[lang])[z]][i].name;
+    for (var i = 0; i < cards_data.length; i++) {
+        thisCard = cards_data[i];
+        if (type != "id") {
+            for (var z = 0; z < Object.keys(thisCard.name).length; z++) {
+                if (langFix(thisCard.name[Object.keys(thisCard.name)[z]]) == langFix(reference)) {
+                    return thisCard.name['enUS'];
                 }
-                return getCardName(cards_data[lang][Object.keys(cards_data[lang])[z]][i].id, 'id', 'enUS');
+            }
+        } else {
+            if (langFix(thisCard.id) == langFix(reference)) {
+                return thisCard.name['enUS'];
             }
         }
     }

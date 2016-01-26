@@ -15,6 +15,7 @@ Features
  - elitedecks.net
  - gosugamers.net
  - heartharena.com
+ - hearthbase.com
  - hearthbuilder.com
  - hearthhead.com (including deckbuilder)
  - hearthnews.fr
