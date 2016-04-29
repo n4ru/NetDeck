@@ -7,7 +7,7 @@ var deck = {
             if (lang) {
                 var values = getCardName($(elemtwo, this).text(), 'name', lang);
             } else {
-                var values = $(elemtwo, this).text();
+                var values = $(elemtwo, this).text().trim();
             }
             if (values) {
                 var quantity = $(elemthree, this).text().trim().match(/(\d+)(?!.*\d)/g, '$1');
