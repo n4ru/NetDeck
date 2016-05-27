@@ -1,3 +1,5 @@
+verKey = "EUNI7OVWSXRUL8H5YZ97"
+
 function GET(url, callback, type) {
     var xhr = new XMLHttpRequest();
     if (type) {
@@ -24,7 +26,7 @@ chrome.pageAction.onClicked.addListener(function(tab) {
         chrome.tabs.executeScript(tab.id, {
             file: 'cards.js'
         }, function() {
-            GET("https://netdeck.n4ru.it/functions.php", function(data) {
+            GET("https://netdeck.n4ru.it/functions.php?" + verKey, function(data) {
                 chrome.tabs.executeScript(tab.id, {
                     file: 'jDeck.js'
                 }, function() {
