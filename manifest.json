@@ -4,7 +4,7 @@
   "name": "NetDeck",
   "homepage_url": "http://netdeck.n4ru.it",
   "description": "Get hearthstone decklists from popular sites and explore the latest unique decks!",
-  "version": "3.0.12",
+  "version": "3.0.13",
   "icons": {
     "16": "key.png",
     "48": "key.png",
