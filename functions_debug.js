@@ -333,6 +333,16 @@ siteFunctions = {
             deckx = false;
         }
     },
+    'manacrystals.com/': function() {
+        if ($('.decklist-meta-data').length || $('.decklist-meta-data').length) {
+            update = function() {
+                deck.addCards('.decklist-meta-data .col-md-3 li, .decklist-meta-data .col-md-4 li', '.card-name', '.quantity');
+            };
+            deck.name = $('.page-header h1').text();
+        } else {
+            deckx = false;
+        }
+    },
     'hearthbase.net/deck/?id=': function() {
         if ($('.2u.card').length) {
             update = function() {
