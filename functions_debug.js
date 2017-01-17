@@ -60,7 +60,7 @@ siteFunctions = {
     'hearthhead.com/decks/': function() {
         if ($('.decklist-wrap').length) {
             update = function() {
-                deck.addCards('.dckbldr-card-id', '.card-title', 'card-quantity');
+                deck.addCards('.dckbldr-card-id', '.card-title', '.card-quantity');
             };
             deck.name = $('.dckview-deck-name').text();
         } else {
