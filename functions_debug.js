@@ -57,6 +57,16 @@ siteFunctions = {
             deckx = false;
         }
     },
+    'hearthhead.com/decks/': function() {
+        if ($('.decklist-wrap').length) {
+            update = function() {
+                deck.addCards('.dckbldr-card-id', '.card-title', 'card-quantity');
+            };
+            deck.name = $('.dckview-deck-name').text();
+        } else {
+            deckx = false;
+        }
+    },
     'playhs.es/mazos/cazador/item/': function() {
         update = function() {
             for (var x = 0; x < 2; x++) {
@@ -329,6 +339,16 @@ siteFunctions = {
                 deck.addCards('.class-cards .card, .neutral-cards .card', '.card-title', '.card-count');
             };
             deck.name = $('#deck-list-title').text();
+        } else {
+            deckx = false;
+        }
+    },
+    'manacrystals.com/': function() {
+        if ($('.decklist-meta-data').length || $('.decklist-meta-data').length) {
+            update = function() {
+                deck.addCards('.decklist-meta-data .col-md-3 li, .decklist-meta-data .col-md-4 li', '.card-name', '.quantity');
+            };
+            deck.name = $('.page-header h1').text();
         } else {
             deckx = false;
         }
