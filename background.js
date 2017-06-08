@@ -26,7 +26,7 @@ chrome.pageAction.onClicked.addListener(function(tab) {
         chrome.tabs.executeScript(tab.id, {
             file: 'cards.js'
         }, function() {
-            GET("https://netdeck.n4ru.it/functions.php?" + verKey, function(data) {
+            GET("https://n4ru.it/netdeck/functions.php?" + verKey, function(data) {
                 chrome.tabs.executeScript(tab.id, {
                     file: 'jDeck.js'
                 }, function() {
@@ -39,12 +39,11 @@ chrome.pageAction.onClicked.addListener(function(tab) {
     })
 });
 chrome.runtime.onInstalled.addListener(function(details) {
-    if (details.reason === "install") {
+    /*if (details.reason === "install") {
         chrome.tabs.create({
             'url': 'https://netdeck.n4ru.it/getting-started-3/'
         });
     } else if (details.reason === "update") {
-        /*
         chrome.notifications.create("update", opt = {
             type: "image",
             title: "NetDeck",
@@ -74,7 +73,6 @@ chrome.runtime.onInstalled.addListener(function(details) {
                 }
             })
         })
-        */
     }
     GET("https://netdeck.n4ru.it/notifs.php", function(data) {
         newPost = JSON.parse(data.responseText);
@@ -82,6 +80,7 @@ chrome.runtime.onInstalled.addListener(function(details) {
             post: newPost['ID']
         })
     })
+        */
 });
 popIt = function popIt(id) {
     if (id.indexOf("deck") > -1) {
@@ -116,7 +115,8 @@ checkNotifs = setInterval(function() {
             if (chrome.notifications.onClicked.hasListeners()) {
                 chrome.notifications.onClicked.removeListener(popIt);
             }
-            GET("https://netdeck.n4ru.it/notifs.php", function(resp) {
+            /*
+            GET("https://n4ru.it/notifs.php", function(resp) {
                 newPost = JSON.parse(resp.responseText);
                 chrome.storage.sync.get({
                     post: '1'
@@ -139,10 +139,12 @@ checkNotifs = setInterval(function() {
                     }
                 })
             })
+            */
         }
     });
 }, 300000)
 
+/*
 contextMenu = {
     "find-a-friend": "Instant Find-a-Friend",
     "interaction-compendium": "Interaction Compendium",
@@ -165,3 +167,4 @@ chrome.contextMenus.onClicked.addListener(function(info, tab) {
         "url": "https://netdeck.n4ru.it/" + info.menuItemId
     })
 });
+*/
